@@ -1,0 +1,578 @@
+/* =========================================================
+   style.css
+   Tema "Ateliê Digital" - Dark Mode Premium
+   Sistema de loja de roupas - Moda & Cia.
+
+   COMO LER ESTE ARQUIVO:
+   1. VARIÁVEIS (:root)      -> todas as cores/medidas centralizadas
+   2. FONTES E BASE          -> fonte, fundo, texto padrão
+   3. SIDEBAR                -> menu lateral escuro com linha de destaque
+   4. CARDS                  -> os "quadrados" de conteúdo (com o efeito glow)
+   5. BOTÕES                 -> botões do Bootstrap com o tema aplicado
+   6. BADGES / STATUS        -> as "etiquetas" coloridas (ex: Ativo/Inativo)
+   7. TABELAS                -> estilo das listagens
+   8. FORMULÁRIOS E MODAIS   -> campos de input e as janelas de cadastro
+   9. PAGINAÇÃO              -> botões de página (usado em Pedidos)
+   10. DETALHES EXTRAS       -> scrollbar, foco de acessibilidade, animações
+   11. RESPONSIVIDADE        -> ajustes para celular
+   ========================================================= */
+
+/* ---------- FONTES (Google Fonts) ---------- */
+/* Sora: fonte dos títulos (mais moderna e geométrica)
+   Inter: fonte do texto normal (fácil leitura)
+   JetBrains Mono: fonte usada só nos números (dá cara de "painel de dados") */
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap');
+
+/* =========================================================
+   1. VARIÁVEIS GLOBAIS
+   Mudar uma cor aqui muda em todo o site de uma vez só.
+   ========================================================= */
+:root {
+  /* Cores principais do tema escuro */
+  --bg-page: #0a0d1a;
+  --bg-sidebar-start: #05060d;
+  --bg-sidebar-end: #150b28;
+  --bg-card: #12162a;
+  --bg-card-hover: #161c36;
+  --bg-input: #0f1326;
+
+  /* Texto */
+  --text-main: #e7e9f5;
+  --text-muted: #8b91b0;
+  --text-heading: #f5f3ff;
+
+  /* Bordas */
+  --border-soft: rgba(255, 255, 255, 0.08);
+  --border-soft-strong: rgba(255, 255, 255, 0.14);
+
+  /* Acento principal (gradiente violeta -> magenta) */
+  --primary: #8b5cf6;
+  --primary-dark: #7c3aed;
+  --primary-light: rgba(139, 92, 246, 0.15);
+  --gradient-primary: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+
+  /* Acento de luxo (dourado champanhe, usado com moderação) */
+  --accent-gold: #e3c17a;
+
+  /* Cores de status */
+  --success: #34d399;
+  --warning: #fbbf24;
+  --danger: #f87171;
+  --info: #38bdf8;
+
+  /* Sombras e brilho (o efeito "glow" dos cards) */
+  --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.35);
+  --shadow-glow: 0 0 0 1px rgba(139, 92, 246, 0.25), 0 12px 32px rgba(139, 92, 246, 0.18);
+  --shadow-lg: 0 20px 45px rgba(0, 0, 0, 0.5);
+
+  /* Formas */
+  --radius-lg: 18px;
+  --radius-md: 12px;
+
+  /* Fontes */
+  --font-display: 'Sora', sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --transition: all 0.25s ease;
+}
+
+/* =========================================================
+   2. FONTES E BASE DA PÁGINA
+   ========================================================= */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* O HTML usa <body class="bg-light">. O Bootstrap aplica bg-light com
+   !important, então também precisamos de !important aqui para vencer. */
+body,
+body.bg-light {
+  background: var(--bg-page) !important;
+  color: var(--text-main);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  color: var(--text-heading);
+  letter-spacing: -0.02em;
+}
+
+/* Assinatura visual: todo número de destaque dentro de um card
+   (contadores, faturamento, totais) usa fonte "de painel de dados". */
+.card h3.mb-0,
+#totalFaturamento,
+#totalPedido {
+  font-family: var(--font-mono);
+  letter-spacing: -0.01em;
+}
+
+.text-muted {
+  color: var(--text-muted) !important;
+}
+
+hr {
+  border-color: var(--border-soft);
+}
+
+/* =========================================================
+   3. SIDEBAR
+   ========================================================= */
+.sidebar {
+  width: 260px;
+  min-height: 100vh;
+  background: linear-gradient(180deg, var(--bg-sidebar-start) 0%, var(--bg-sidebar-end) 100%) !important;
+  position: sticky;
+  top: 0;
+  border-right: 1px solid var(--border-soft);
+  /* Linha vertical em gradiente na borda direita: o "fio dourado" do ateliê */
+  box-shadow: inset -1px 0 0 rgba(227, 193, 122, 0.15);
+}
+
+.sidebar h1 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #ffffff 0%, var(--accent-gold) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.sidebar .text-white-50 {
+  color: rgba(255, 255, 255, 0.45) !important;
+}
+
+.sidebar .nav-link {
+  border-radius: 10px;
+  padding: 0.65rem 1rem;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: var(--transition);
+  margin-bottom: 3px;
+  color: rgba(255, 255, 255, 0.6) !important;
+  position: relative;
+}
+
+.sidebar .nav-link:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff !important;
+  transform: translateX(2px);
+}
+
+.sidebar .nav-link.active {
+  background: var(--gradient-primary);
+  color: #fff !important;
+  box-shadow: 0 4px 18px rgba(139, 92, 246, 0.45);
+}
+
+/* =========================================================
+   4. CARDS (com o efeito "glow" no hover)
+   ========================================================= */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  background: var(--bg-card-hover);
+  border-color: rgba(139, 92, 246, 0.35);
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-2px);
+}
+
+.card-header {
+  background: transparent !important;
+  border-bottom: 1px solid var(--border-soft);
+  border-top-left-radius: var(--radius-lg) !important;
+  border-top-right-radius: var(--radius-lg) !important;
+}
+
+.card-header h3 {
+  font-size: 1.05rem;
+}
+
+/* Cards de status do dashboard usam classes tipo border-warning,
+   border-success etc. Elas continuam funcionando, só escurecemos o tom. */
+.border-warning { border-color: rgba(251, 191, 36, 0.4) !important; }
+.border-success { border-color: rgba(52, 211, 153, 0.4) !important; }
+.border-primary { border-color: rgba(139, 92, 246, 0.4) !important; }
+.border-info { border-color: rgba(56, 189, 248, 0.4) !important; }
+.border-danger { border-color: rgba(248, 113, 113, 0.4) !important; }
+
+/* =========================================================
+   5. BOTÕES
+   ========================================================= */
+.btn {
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.88rem;
+  transition: var(--transition);
+}
+
+.btn-primary {
+  background: var(--gradient-primary);
+  border: none;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+}
+
+.btn-success {
+  background: var(--success);
+  border-color: var(--success);
+  color: #06281c;
+}
+
+.btn-warning {
+  background: var(--warning);
+  border-color: var(--warning);
+  color: #2b1c02;
+}
+
+.btn-outline-primary {
+  border-color: var(--primary);
+  color: #c4b5fd;
+}
+.btn-outline-primary:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+.btn-outline-secondary {
+  border-color: var(--border-soft-strong);
+  color: var(--text-muted);
+}
+.btn-outline-secondary:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-main);
+  border-color: var(--border-soft-strong);
+}
+
+.btn-outline-success {
+  border-color: var(--success);
+  color: var(--success);
+}
+.btn-outline-success:hover {
+  background: var(--success);
+  color: #06281c;
+}
+
+.btn-outline-danger {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+.btn-outline-danger:hover {
+  background: var(--danger);
+  color: #2b0505;
+}
+
+/* =========================================================
+   6. BADGES / STATUS (as "etiquetas" coloridas)
+   Sobrescrevemos as classes "subtle" do Bootstrap, que por padrão
+   são claras e ficariam feias no fundo escuro.
+   ========================================================= */
+.badge {
+  font-weight: 600;
+  font-size: 0.72rem;
+  padding: 0.4em 0.7em;
+  border-radius: 8px;
+}
+
+.badge.bg-primary-subtle { background: rgba(139, 92, 246, 0.18) !important; color: #c4b5fd !important; }
+.badge.bg-danger-subtle  { background: rgba(248, 113, 113, 0.18) !important; color: #fca5a5 !important; }
+.badge.bg-success        { background: var(--success) !important; color: #06281c !important; }
+.badge.bg-secondary      { background: rgba(255,255,255,0.12) !important; color: var(--text-muted) !important; }
+.badge.bg-warning        { background: var(--warning) !important; color: #2b1c02 !important; }
+.badge.bg-danger         { background: var(--danger) !important; color: #2b0505 !important; }
+.badge.bg-info-subtle    { background: rgba(56, 189, 248, 0.18) !important; color: #7dd3fc !important; }
+.badge.bg-success-subtle { background: rgba(52, 211, 153, 0.18) !important; color: #6ee7b7 !important; }
+.badge.bg-warning-subtle { background: rgba(251, 191, 36, 0.18) !important; color: #fcd34d !important; }
+
+/* Fallback: caso algum status caia na cor "secondary" (padrão do Bootstrap) */
+.bg-secondary-subtle { background: rgba(255, 255, 255, 0.08) !important; }
+.text-secondary       { color: #b6bccf !important; }
+
+/* As classes "text-*" do Bootstrap (usadas junto com as "bg-*-subtle" acima nos
+   badges de status dos pedidos) vêm com uma cor fixa clara demais/escura demais
+   para o fundo escuro. Redefinimos aqui para garantir contraste em qualquer
+   combinação (badge de status, texto solto, ícone, etc). */
+.text-primary { color: #c4b5fd !important; }
+.text-success { color: #6ee7b7 !important; }
+.text-danger  { color: #fca5a5 !important; }
+.text-warning { color: #fcd34d !important; }
+.text-info    { color: #7dd3fc !important; }
+
+/* Breadcrumb (Início / Página atual no topo de cada tela).
+   O Bootstrap fixa a cor do item ativo em um cinza que não é legível
+   no fundo escuro - por isso "Pedidos", "Clientes" etc apareciam apagados. */
+.breadcrumb-item {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+.breadcrumb-item.active {
+  color: var(--text-main) !important;
+  font-weight: 600;
+}
+.breadcrumb-item + .breadcrumb-item::before {
+  color: var(--text-muted);
+}
+
+/* Títulos dentro do cabeçalho dos cards (ex: "Lista de pedidos",
+   "Lista de produtos", "Lista de clientes"). O Bootstrap 5.3 usa
+   "color: inherit" nos headings, e dentro do card-header isso pode
+   herdar uma cor errada - por isso forçamos a cor aqui com prioridade alta. */
+.card-header h1, .card-header h2, .card-header h3,
+.card-header h4, .card-header h5, .card-header h6,
+.card-header .h1, .card-header .h2, .card-header .h3,
+.card-header .h4, .card-header .h5, .card-header .h6 {
+  color: var(--text-heading) !important;
+}
+
+/* =========================================================
+   7. TABELAS
+   ========================================================= */
+.table {
+  margin-bottom: 0;
+  color: var(--text-main);
+}
+
+.table thead th {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid var(--border-soft-strong);
+  padding: 0.8rem 1rem;
+}
+
+.table tbody td {
+  padding: 0.8rem 1rem;
+  vertical-align: middle;
+  border-color: var(--border-soft);
+}
+
+.table tbody tr {
+  transition: var(--transition);
+}
+
+.table tbody tr:hover {
+  background: rgba(139, 92, 246, 0.05);
+}
+
+/* Produto esgotado (estoque = 0): linha em vermelho translúcido */
+/* Produto esgotado (estoque = 0): linha com vermelho bem clarinho 
+.table-danger,
+.table-danger > td,
+.linha-esgotada,
+.linha-esgotada > td {
+  --bs-table-bg: rgba(248, 113, 113, 0.08) !important;
+  background: rgba(248, 113, 113, 0.08) !important;
+  color: #fca5a5 !important;
+}*/
+/* Linha de produto esgotado - vermelho bem clarinho e sutil */
+.linha-esgotada td {
+  background-color: rgba(255, 100, 100, 0.08) !important;
+}
+
+
+.linha-esgotada:hover,
+.linha-esgotada:hover > td {
+  background: rgba(248, 113, 113, 0.14) !important;
+}
+
+/* =========================================================
+   8. FORMULÁRIOS E MODAIS
+   ========================================================= */
+.form-control,
+.form-select {
+  background: var(--bg-input);
+  border-radius: 10px;
+  border: 1px solid var(--border-soft-strong);
+  color: var(--text-main);
+  padding: 0.6rem 0.9rem;
+  font-size: 0.9rem;
+  transition: var(--transition);
+}
+
+.form-control:focus,
+.form-select:focus {
+  background: var(--bg-input);
+  color: var(--text-main);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.18);
+}
+
+.form-control::placeholder {
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+.form-control[readonly] {
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-muted);
+}
+
+.form-label {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text-main);
+  margin-bottom: 0.3rem;
+}
+
+.modal-content {
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft-strong);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.modal-header,
+.modal-footer {
+  border-color: var(--border-soft);
+  padding: 1.2rem 1.5rem;
+}
+
+.modal-title {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.btn-close {
+  filter: invert(1) grayscale(100%) brightness(1.8);
+}
+
+/* =========================================================
+   9. PAGINAÇÃO
+   ========================================================= */
+.pagination .page-link {
+  background: var(--bg-input);
+  border-radius: 8px;
+  margin: 0 2px;
+  border: 1px solid var(--border-soft-strong);
+  color: var(--text-main);
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.pagination .page-item.active .page-link {
+  background: var(--gradient-primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+.pagination .page-item.disabled .page-link {
+  background: transparent;
+  color: var(--text-muted);
+  opacity: 0.4;
+}
+
+.pagination .page-link:hover {
+  background: var(--primary-light);
+  border-color: var(--primary);
+  color: #c4b5fd;
+}
+
+/* =========================================================
+   10. DETALHES EXTRAS
+   ========================================================= */
+
+/* Scrollbar fina no tema do site (funciona em Chrome/Edge) */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-page);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-soft-strong);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* Foco visível para quem navega pelo teclado (acessibilidade) */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--accent-gold);
+  outline-offset: 2px;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card {
+  animation: fadeInUp 0.4s ease-out;
+}
+
+/* Respeita quem prefere menos animação no sistema operacional */
+@media (prefers-reduced-motion: reduce) {
+  .card, .card::before, .btn, .nav-link {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Linha de produto esgotado: vermelho bem clarinho, só um toque sutil */
+.linha-esgotada {
+  background: rgba(248, 113, 113, 0.06) !important;
+}
+.linha-esgotada:hover {
+  background: rgba(248, 113, 113, 0.10) !important;
+}
+/* =========================================================
+   11. RESPONSIVIDADE
+   ========================================================= */
+@media (max-width: 767.98px) {
+  .sidebar {
+    width: 100%;
+    min-height: auto;
+    position: relative;
+    padding: 1rem !important;
+    box-shadow: none;
+    border-right: none;
+    border-bottom: 1px solid var(--border-soft);
+  }
+
+  .sidebar .nav {
+    flex-direction: row !important;
+    flex-wrap: wrap;
+    gap: 0.5rem !important;
+  }
+
+  .sidebar .nav-link {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .card-body {
+    padding: 1rem;
+  }
+
+  .modal-dialog {
+    margin: 0.5rem;
+  }
+}

@@ -1,0 +1,1849 @@
+{
+  "configuracoes": [
+    {
+      "id": "1",
+      "nomeLoja": "Moda & Cia",
+      "moeda": "BRL",
+      "estoqueMinimo": 5
+    }
+  ],
+  "clientes": [
+    {
+      "id": "1",
+      "nome": "Ana Almeida",
+      "cpf": "123.456.781-43",
+      "email": "ana.almeida@exemplo.com",
+      "telefone": "(11) 92824-1409",
+      "endereco": "Rua das Flores, 107 - São Paulo - SP",
+      "ativo": true,
+      "dataCadastro": "2026-04-05"
+    },
+    {
+      "id": "2",
+      "nome": "Bruna Barros",
+      "cpf": "123.456.782-24",
+      "email": "bruna.barros@exemplo.com",
+      "telefone": "(11) 95506-5012",
+      "endereco": "Av. Brasil, 114 - Campinas - SP",
+      "ativo": true,
+      "dataCadastro": "2026-04-09"
+    },
+    {
+      "id": "3",
+      "nome": "Carlos Cardoso",
+      "cpf": "123.456.783-05",
+      "email": "carlos.cardoso@exemplo.com",
+      "telefone": "(11) 94657-3286",
+      "endereco": "Rua do Sol, 121 - Santos - SP",
+      "ativo": true,
+      "dataCadastro": "2026-04-13"
+    },
+    {
+      "id": "4",
+      "nome": "Daniel Dias",
+      "cpf": "123.456.784-96",
+      "email": "daniel.dias@exemplo.com",
+      "telefone": "(11) 92679-9935",
+      "endereco": "Av. Paulista, 128 - Sorocaba - SP",
+      "ativo": false,
+      "dataCadastro": "2026-04-17"
+    },
+    {
+      "id": "5",
+      "nome": "Eduarda Ferreira",
+      "cpf": "123.456.785-77",
+      "email": "eduarda.ferreira@exemplo.com",
+      "telefone": "(11) 92424-7912",
+      "endereco": "Rua Nova, 135 - Ribeirão Preto - SP",
+      "ativo": true,
+      "dataCadastro": "2026-04-21"
+    },
+    {
+      "id": "6",
+      "nome": "Felipe Gomes",
+      "cpf": "123.456.786-58",
+      "email": "felipe.gomes@exemplo.com",
+      "telefone": "(11) 91520-1488",
+      "endereco": "Rua das Acácias, 142 - São Bernardo do Campo - SP",
+      "ativo": true,
+      "dataCadastro": "2026-04-25"
+    },
+    {
+      "id": "7",
+      "nome": "Gabriela Henriques",
+      "cpf": "123.456.787-39",
+      "email": "gabriela.henriques@exemplo.com",
+      "telefone": "(11) 92535-4582",
+      "endereco": "Av. Central, 149 - Jundiaí - SP",
+      "ativo": true,
+      "dataCadastro": "2026-04-29"
+    },
+    {
+      "id": "8",
+      "nome": "Henrique Lima",
+      "cpf": "123.456.788-10",
+      "email": "henrique.lima@exemplo.com",
+      "telefone": "(11) 94811-9279",
+      "endereco": "Rua Vitória, 156 - Mogi das Cruzes - SP",
+      "ativo": true,
+      "dataCadastro": "2026-05-03"
+    },
+    {
+      "id": "9",
+      "nome": "Isabela Melo",
+      "cpf": "123.456.789-09",
+      "email": "isabela.melo@exemplo.com",
+      "telefone": "(11) 91434-4257",
+      "endereco": "Av. das Nações, 163 - São Paulo - SP",
+      "ativo": true,
+      "dataCadastro": "2026-05-07"
+    },
+    {
+      "id": "10",
+      "nome": "João Nogueira",
+      "cpf": "123.456.790-34",
+      "email": "joao.nogueira@exemplo.com",
+      "telefone": "(11) 99928-7873",
+      "endereco": "Rua Primavera, 170 - Campinas - SP",
+      "ativo": true,
+      "dataCadastro": "2026-05-11"
+    },
+    {
+      "id": "11",
+      "nome": "Karen Oliveira",
+      "cpf": "123.456.791-15",
+      "email": "karen.oliveira@exemplo.com",
+      "telefone": "(11) 94611-8359",
+      "endereco": "Rua das Flores, 177 - Santos - SP",
+      "ativo": false,
+      "dataCadastro": "2026-05-15"
+    },
+    {
+      "id": "12",
+      "nome": "Lucas Pereira",
+      "cpf": "123.456.792-04",
+      "email": "lucas.pereira@exemplo.com",
+      "telefone": "(11) 95557-1106",
+      "endereco": "Av. Brasil, 184 - Sorocaba - SP",
+      "ativo": true,
+      "dataCadastro": "2026-05-19"
+    },
+    {
+      "id": "13",
+      "nome": "Mariana Queiroz",
+      "cpf": "123.456.793-87",
+      "email": "mariana.queiroz@exemplo.com",
+      "telefone": "(11) 93615-7924",
+      "endereco": "Rua do Sol, 191 - Ribeirão Preto - SP",
+      "ativo": true,
+      "dataCadastro": "2026-05-23"
+    },
+    {
+      "nome": "Nicolas Ramos",
+      "email": "nicolas.ramos@exemplo.com",
+      "cpf": "123.456.794-68",
+      "endereco": "Rua Santa Ifigenia, 3434",
+      "id": "14"
+    },
+    {
+      "id": "15",
+      "nome": "Olívia Santana",
+      "cpf": "123.456.795-49",
+      "email": "olivia.santana@exemplo.com",
+      "telefone": "(11) 93547-4527",
+      "endereco": "Rua Nova, 205 - Jundiaí - SP",
+      "ativo": false,
+      "dataCadastro": "2026-05-31"
+    }
+  ],
+  "produtos": [
+    {
+      "id": "1",
+      "nome": "Camiseta Básica Algodão",
+      "categoria": "masculino",
+      "tamanho": [
+        "P",
+        "M",
+        "G",
+        "GG"
+      ],
+      "preco": 49.9,
+      "estoque": 151,
+      "sku": "PRD-2026001",
+      "ativo": true
+    },
+    {
+      "nome": "Camisa Social Slim",
+      "categoria": "masculino",
+      "marca": "",
+      "tamanho": "P,M,G,GG",
+      "cor": "",
+      "preco": 119.9,
+      "estoque": 5,
+      "status": "Ativo",
+      "descricao": "",
+      "id": "2"
+    },
+    {
+      "nome": "Calça Jeans Reta",
+      "categoria": "masculino",
+      "tamanho": "G",
+      "preco": 159.9,
+      "estoque": 5,
+      "id": "3"
+    },
+    {
+      "nome": "Bermuda Moletom",
+      "categoria": "masculino",
+      "tamanho": "P",
+      "preco": 69.9,
+      "estoque": 0,
+      "id": "4"
+    },
+    {
+      "nome": "Vestido Floral",
+      "categoria": "feminino",
+      "tamanho": "G",
+      "preco": 139.9,
+      "estoque": 0,
+      "id": "5"
+    },
+    {
+      "id": "6",
+      "nome": "Blusa Cropped",
+      "categoria": "feminino",
+      "tamanho": [
+        "PP",
+        "P",
+        "M",
+        "G"
+      ],
+      "preco": 54.9,
+      "estoque": 101,
+      "sku": "PRD-2026006",
+      "ativo": true
+    },
+    {
+      "nome": "Calça Skinny",
+      "categoria": "feminino",
+      "tamanho": "G",
+      "preco": 159.9,
+      "estoque": 10,
+      "id": "7"
+    },
+    {
+      "id": "8",
+      "nome": "Saia Midi",
+      "categoria": "feminino",
+      "tamanho": [
+        "PP",
+        "P",
+        "M",
+        "G"
+      ],
+      "preco": 104.9,
+      "estoque": 17,
+      "sku": "PRD-2026008",
+      "ativo": true
+    },
+    {
+      "id": "9",
+      "nome": "Body Infantil",
+      "categoria": "infantil",
+      "tamanho": [
+        "2",
+        "4",
+        "6",
+        "8",
+        "10",
+        "12"
+      ],
+      "preco": 49.9,
+      "estoque": 95,
+      "sku": "PRD-2026009",
+      "ativo": true
+    },
+    {
+      "id": "10",
+      "nome": "Conjunto Infantil Verão",
+      "categoria": "infantil",
+      "tamanho": [
+        "2",
+        "4",
+        "6",
+        "8",
+        "10",
+        "12"
+      ],
+      "preco": 84.9,
+      "estoque": 78,
+      "sku": "PRD-2026010",
+      "ativo": true
+    },
+    {
+      "id": "11",
+      "nome": "Moletom Infantil",
+      "categoria": "infantil",
+      "tamanho": [
+        "2",
+        "4",
+        "6",
+        "8",
+        "10",
+        "12"
+      ],
+      "preco": 79.9,
+      "estoque": 62,
+      "sku": "PRD-2026011",
+      "ativo": true
+    },
+    {
+      "id": "12",
+      "nome": "Calça Legging Infantil",
+      "categoria": "infantil",
+      "tamanho": [
+        "2",
+        "4",
+        "6",
+        "8",
+        "10",
+        "12"
+      ],
+      "preco": 44.9,
+      "estoque": 158,
+      "sku": "PRD-2026012",
+      "ativo": true
+    },
+    {
+      "id": "13",
+      "nome": "Boné Aba Curva",
+      "categoria": "acessórios",
+      "tamanho": "único",
+      "preco": 39.9,
+      "estoque": 102,
+      "sku": "PRD-2026013",
+      "ativo": true
+    },
+    {
+      "nome": "Cinto Couro",
+      "categoria": "acessórios",
+      "tamanho": "único",
+      "preco": 74.9,
+      "estoque": 6,
+      "id": "14"
+    },
+    {
+      "id": "15",
+      "nome": "Bolsa Tiracolo",
+      "categoria": "acessórios",
+      "tamanho": "único",
+      "preco": 129.9,
+      "estoque": 9,
+      "sku": "PRD-2026015",
+      "ativo": false
+    },
+    {
+      "id": "16",
+      "nome": "Carteira Slim",
+      "categoria": "acessórios",
+      "tamanho": "único",
+      "preco": 59.9,
+      "estoque": 42,
+      "sku": "PRD-2026016",
+      "ativo": true
+    },
+    {
+      "id": "17",
+      "nome": "Meia Kit 3 Pares",
+      "categoria": "acessórios",
+      "tamanho": "único",
+      "preco": 34.9,
+      "estoque": 182,
+      "sku": "PRD-2026017",
+      "ativo": true
+    },
+    {
+      "id": "18",
+      "nome": "Kit Scrunchies",
+      "categoria": "acessórios",
+      "tamanho": "único",
+      "preco": 29.9,
+      "estoque": 168,
+      "sku": "PRD-2026018",
+      "ativo": true
+    },
+    {
+      "nome": "Camiseta Regata Jiu-Jitsu",
+      "categoria": "Camisa",
+      "marca": "RVCA",
+      "tamanho": "P,M,G,GG",
+      "cor": "Preto",
+      "preco": 69.9,
+      "estoque": 50,
+      "status": "Ativo",
+      "descricao": "",
+      "id": "KnUULaG7YEs"
+    }
+  ],
+  "pedidos": [
+    {
+      "id": "43",
+      "clienteId": 8,
+      "status": "cancelado",
+      "data": "2026-07-26",
+      "valorTotal": 899.1,
+      "observacao": "Cliente retirou na loja"
+    },
+    {
+      "id": "47",
+      "clienteId": 1,
+      "status": "entregue",
+      "data": "2026-07-25",
+      "valorTotal": 74.9,
+      "observacao": ""
+    },
+    {
+      "id": "40",
+      "clienteId": 6,
+      "status": "entregue",
+      "data": "2026-07-24",
+      "valorTotal": 519.2,
+      "observacao": "Pagamento via cartão"
+    },
+    {
+      "id": "46",
+      "clienteId": 4,
+      "status": "entregue",
+      "data": "2026-07-23",
+      "valorTotal": 354.6,
+      "observacao": "Cliente retirou na loja"
+    },
+    {
+      "id": "48",
+      "clienteId": 13,
+      "status": "enviado",
+      "data": "2026-07-23",
+      "valorTotal": 29.9,
+      "observacao": ""
+    },
+    {
+      "clienteId": 11,
+      "dataPedido": "2026-07-27",
+      "status": "entregue",
+      "observacoes": "",
+      "total": 469.6,
+      "id": "25"
+    },
+    {
+      "id": "29",
+      "clienteId": 11,
+      "status": "entregue",
+      "data": "2026-07-21",
+      "valorTotal": 559.3,
+      "observacao": "Cliente pediu embrulho para presente"
+    },
+    {
+      "id": "37",
+      "clienteId": 3,
+      "status": "cancelado",
+      "data": "2026-07-14",
+      "valorTotal": 599.3,
+      "observacao": "Pagamento via cartão"
+    },
+    {
+      "id": "4",
+      "clienteId": 4,
+      "status": "enviado",
+      "data": "2026-07-11",
+      "valorTotal": 469.3,
+      "observacao": "Entregar no endereço do cliente"
+    },
+    {
+      "id": "21",
+      "clienteId": 12,
+      "status": "entregue",
+      "data": "2026-07-11",
+      "valorTotal": 624.4,
+      "observacao": "Retirar em loja"
+    },
+    {
+      "clienteId": 13,
+      "dataPedido": "2026-07-27",
+      "status": "cancelado",
+      "observacoes": "",
+      "total": 404.70000000000005,
+      "id": "19"
+    },
+    {
+      "clienteId": 5,
+      "dataPedido": "2026-07-27",
+      "status": "Pago",
+      "observacoes": "",
+      "total": 584.4,
+      "id": "42"
+    },
+    {
+      "id": "11",
+      "clienteId": 15,
+      "status": "entregue",
+      "data": "2026-07-09",
+      "valorTotal": 414.3,
+      "observacao": "Pagamento via cartão"
+    },
+    {
+      "id": "10",
+      "clienteId": 13,
+      "status": "entregue",
+      "data": "2026-07-08",
+      "valorTotal": 399.3,
+      "observacao": "Entregar no endereço do cliente"
+    },
+    {
+      "id": "39",
+      "clienteId": 15,
+      "status": "entregue",
+      "data": "2026-07-08",
+      "valorTotal": 119.8,
+      "observacao": "Pagamento via cartão"
+    },
+    {
+      "id": "41",
+      "clienteId": 3,
+      "status": "enviado",
+      "data": "2026-07-07",
+      "valorTotal": 364.5,
+      "observacao": ""
+    },
+    {
+      "id": "44",
+      "clienteId": 6,
+      "status": "entregue",
+      "data": "2026-07-03",
+      "valorTotal": 84.9,
+      "observacao": ""
+    },
+    {
+      "clienteId": 11,
+      "dataPedido": "2026-07-27",
+      "status": "Pago",
+      "observacoes": "",
+      "total": 659.2,
+      "id": "15"
+    },
+    {
+      "id": "20",
+      "clienteId": 7,
+      "status": "enviado",
+      "data": "2026-07-02",
+      "valorTotal": 593.9,
+      "observacao": ""
+    },
+    {
+      "id": "22",
+      "clienteId": 10,
+      "status": "enviado",
+      "data": "2026-07-01",
+      "valorTotal": 189.7,
+      "observacao": "Retirar em loja"
+    },
+    {
+      "id": "45",
+      "clienteId": 3,
+      "status": "aguardando pagamento",
+      "data": "2026-07-01",
+      "valorTotal": 709.5,
+      "observacao": "Cliente retirou na loja"
+    },
+    {
+      "clienteId": 4,
+      "dataPedido": "2026-07-27",
+      "status": "Pago",
+      "observacoes": "",
+      "total": 409.4,
+      "id": "35"
+    },
+    {
+      "id": "18",
+      "clienteId": 9,
+      "status": "pago",
+      "data": "2026-06-27",
+      "valorTotal": 229.7,
+      "observacao": ""
+    },
+    {
+      "id": "27",
+      "clienteId": 3,
+      "status": "entregue",
+      "data": "2026-06-26",
+      "valorTotal": 389.4,
+      "observacao": "Retirar em loja"
+    },
+    {
+      "id": "24",
+      "clienteId": 2,
+      "status": "entregue",
+      "data": "2026-06-23",
+      "valorTotal": 579.3,
+      "observacao": "Entregar no endereço do cliente"
+    },
+    {
+      "clienteId": 8,
+      "dataPedido": "2026-07-27",
+      "status": "Pago",
+      "observacoes": "",
+      "total": 279.70000000000005,
+      "id": "2"
+    },
+    {
+      "id": "9",
+      "clienteId": 2,
+      "status": "entregue",
+      "data": "2026-06-16",
+      "valorTotal": 344.4,
+      "observacao": "Retirar em loja"
+    },
+    {
+      "id": "17",
+      "clienteId": 12,
+      "status": "entregue",
+      "data": "2026-06-13",
+      "valorTotal": 209.8,
+      "observacao": "Entregar no endereço do cliente"
+    },
+    {
+      "id": "34",
+      "clienteId": 12,
+      "status": "entregue",
+      "data": "2026-06-12",
+      "valorTotal": 519,
+      "observacao": "Entregar no endereço do cliente"
+    },
+    {
+      "id": "3",
+      "clienteId": 7,
+      "status": "aguardando pagamento",
+      "data": "2026-06-04",
+      "valorTotal": 399.4,
+      "observacao": "Entregar no endereço do cliente"
+    },
+    {
+      "id": "6",
+      "clienteId": 13,
+      "status": "entregue",
+      "data": "2026-06-04",
+      "valorTotal": 554.3,
+      "observacao": "Cliente pediu embrulho para presente"
+    },
+    {
+      "id": "13",
+      "clienteId": 9,
+      "status": "enviado",
+      "data": "2026-05-30",
+      "valorTotal": 159.9,
+      "observacao": "Entregar no endereço do cliente"
+    },
+    {
+      "id": "1",
+      "clienteId": 6,
+      "status": "entregue",
+      "data": "2026-05-27",
+      "valorTotal": 109.8,
+      "observacao": "Entregar no endereço do cliente"
+    },
+    {
+      "id": "7",
+      "clienteId": 9,
+      "status": "enviado",
+      "data": "2026-05-23",
+      "valorTotal": 169.8,
+      "observacao": "Entregar no endereço do cliente"
+    },
+    {
+      "id": "5",
+      "clienteId": 11,
+      "status": "entregue",
+      "data": "2026-05-21",
+      "valorTotal": 879.1,
+      "observacao": "Pagamento via cartão"
+    },
+    {
+      "id": "8",
+      "clienteId": 6,
+      "status": "enviado",
+      "data": "2026-05-21",
+      "valorTotal": 319.6,
+      "observacao": "Retirar em loja"
+    },
+    {
+      "id": "33",
+      "clienteId": 12,
+      "status": "cancelado",
+      "data": "2026-05-20",
+      "valorTotal": 249.5,
+      "observacao": "Entregar no endereço do cliente"
+    },
+    {
+      "id": "26",
+      "clienteId": 5,
+      "status": "cancelado",
+      "data": "2026-05-17",
+      "valorTotal": 314.7,
+      "observacao": "Cliente pediu embrulho para presente"
+    },
+    {
+      "id": "30",
+      "clienteId": 13,
+      "status": "entregue",
+      "data": "2026-05-17",
+      "valorTotal": 259.7,
+      "observacao": "Entregar no endereço do cliente"
+    },
+    {
+      "clienteId": 8,
+      "dataPedido": "2026-07-27",
+      "status": "Pago",
+      "observacoes": "",
+      "total": 79.9,
+      "id": "12"
+    },
+    {
+      "clienteId": 9,
+      "dataPedido": "2026-07-27",
+      "status": "Pago",
+      "observacoes": "",
+      "total": 319.5,
+      "id": "38"
+    },
+    {
+      "id": "28",
+      "clienteId": 15,
+      "status": "entregue",
+      "data": "2026-05-14",
+      "valorTotal": 354.5,
+      "observacao": "Entregar no endereço do cliente"
+    },
+    {
+      "id": "16",
+      "clienteId": 2,
+      "status": "entregue",
+      "data": "2026-05-13",
+      "valorTotal": 234.7,
+      "observacao": ""
+    },
+    {
+      "id": "23",
+      "clienteId": 10,
+      "status": "entregue",
+      "data": "2026-05-09",
+      "valorTotal": 149.7,
+      "observacao": "Pagamento via cartão"
+    },
+    {
+      "id": "36",
+      "clienteId": 5,
+      "status": "cancelado",
+      "data": "2026-05-09",
+      "valorTotal": 209.5,
+      "observacao": "Cliente pediu embrulho para presente"
+    },
+    {
+      "id": "32",
+      "clienteId": 15,
+      "status": "entregue",
+      "data": "2026-05-06",
+      "valorTotal": 594.3,
+      "observacao": "Pagamento via cartão"
+    },
+    {
+      "id": "14",
+      "clienteId": 2,
+      "status": "entregue",
+      "data": "2026-05-05",
+      "valorTotal": 69.8,
+      "observacao": "Cliente pediu embrulho para presente"
+    },
+    {
+      "id": "31",
+      "clienteId": 9,
+      "status": "entregue",
+      "data": "2026-05-05",
+      "valorTotal": 494.6,
+      "observacao": "Cliente pediu embrulho para presente"
+    },
+    {
+      "clienteId": 2,
+      "data": "2026-07-27",
+      "status": "aguardando pagamento",
+      "total": 134.8,
+      "id": "VHl6X1NkJJQ"
+    },
+    {
+      "clienteId": 2,
+      "data": "2026-07-27",
+      "status": "entregue",
+      "total": 84.9,
+      "id": "2lYYK2v-h30"
+    },
+    {
+      "clienteId": 1,
+      "data": "2026-07-27",
+      "status": "entregue",
+      "total": 84.9,
+      "id": "IwHJVTznDic"
+    },
+    {
+      "clienteId": 1,
+      "data": "2026-07-27",
+      "status": "cancelado",
+      "total": 84.9,
+      "id": "JXjDPp87yf8"
+    },
+    {
+      "clienteId": 1,
+      "data": "2026-07-27",
+      "status": "cancelado",
+      "total": 84.9,
+      "id": "3hRXRq02qRo"
+    },
+    {
+      "clienteId": "1",
+      "data": "2026-07-27",
+      "status": "entregue",
+      "total": 84.9,
+      "id": "hoVM6b7pchc"
+    }
+  ],
+  "itensPedido": [
+    {
+      "id": "1",
+      "pedidoId": 1,
+      "produtoId": 6,
+      "nomeProduto": "Blusa Cropped",
+      "quantidade": 2,
+      "precoUnitario": 54.9,
+      "subtotal": 109.8
+    },
+    {
+      "id": "4",
+      "pedidoId": 3,
+      "produtoId": 7,
+      "nomeProduto": "Calça Skinny",
+      "quantidade": 1,
+      "precoUnitario": 159.9,
+      "subtotal": 159.9
+    },
+    {
+      "id": "5",
+      "pedidoId": 3,
+      "produtoId": 16,
+      "nomeProduto": "Carteira Slim",
+      "quantidade": 2,
+      "precoUnitario": 59.9,
+      "subtotal": 119.8
+    },
+    {
+      "id": "6",
+      "pedidoId": 3,
+      "produtoId": 13,
+      "nomeProduto": "Boné Aba Curva",
+      "quantidade": 3,
+      "precoUnitario": 39.9,
+      "subtotal": 119.7
+    },
+    {
+      "id": "7",
+      "pedidoId": 4,
+      "produtoId": 13,
+      "nomeProduto": "Boné Aba Curva",
+      "quantidade": 4,
+      "precoUnitario": 39.9,
+      "subtotal": 159.6
+    },
+    {
+      "id": "8",
+      "pedidoId": 4,
+      "produtoId": 12,
+      "nomeProduto": "Calça Legging Infantil",
+      "quantidade": 1,
+      "precoUnitario": 44.9,
+      "subtotal": 44.9
+    },
+    {
+      "id": "9",
+      "pedidoId": 4,
+      "produtoId": 8,
+      "nomeProduto": "Saia Midi",
+      "quantidade": 1,
+      "precoUnitario": 104.9,
+      "subtotal": 104.9
+    },
+    {
+      "id": "10",
+      "pedidoId": 4,
+      "produtoId": 3,
+      "nomeProduto": "Calça Jeans Reta",
+      "quantidade": 1,
+      "precoUnitario": 159.9,
+      "subtotal": 159.9
+    },
+    {
+      "id": "11",
+      "pedidoId": 5,
+      "produtoId": 3,
+      "nomeProduto": "Calça Jeans Reta",
+      "quantidade": 4,
+      "precoUnitario": 159.9,
+      "subtotal": 639.6
+    },
+    {
+      "id": "12",
+      "pedidoId": 5,
+      "produtoId": 13,
+      "nomeProduto": "Boné Aba Curva",
+      "quantidade": 3,
+      "precoUnitario": 39.9,
+      "subtotal": 119.7
+    },
+    {
+      "id": "13",
+      "pedidoId": 5,
+      "produtoId": 17,
+      "nomeProduto": "Meia Kit 3 Pares",
+      "quantidade": 1,
+      "precoUnitario": 34.9,
+      "subtotal": 34.9
+    },
+    {
+      "id": "14",
+      "pedidoId": 5,
+      "produtoId": 10,
+      "nomeProduto": "Conjunto Infantil Verão",
+      "quantidade": 1,
+      "precoUnitario": 84.9,
+      "subtotal": 84.9
+    },
+    {
+      "id": "15",
+      "pedidoId": 6,
+      "produtoId": 4,
+      "nomeProduto": "Bermuda Moletom",
+      "quantidade": 2,
+      "precoUnitario": 69.9,
+      "subtotal": 139.8
+    },
+    {
+      "id": "16",
+      "pedidoId": 6,
+      "produtoId": 10,
+      "nomeProduto": "Conjunto Infantil Verão",
+      "quantidade": 4,
+      "precoUnitario": 84.9,
+      "subtotal": 339.6
+    },
+    {
+      "id": "17",
+      "pedidoId": 6,
+      "produtoId": 14,
+      "nomeProduto": "Cinto Couro",
+      "quantidade": 1,
+      "precoUnitario": 74.9,
+      "subtotal": 74.9
+    },
+    {
+      "id": "18",
+      "pedidoId": 7,
+      "produtoId": 10,
+      "nomeProduto": "Conjunto Infantil Verão",
+      "quantidade": 2,
+      "precoUnitario": 84.9,
+      "subtotal": 169.8
+    },
+    {
+      "id": "19",
+      "pedidoId": 8,
+      "produtoId": 11,
+      "nomeProduto": "Moletom Infantil",
+      "quantidade": 4,
+      "precoUnitario": 79.9,
+      "subtotal": 319.6
+    },
+    {
+      "id": "20",
+      "pedidoId": 9,
+      "produtoId": 8,
+      "nomeProduto": "Saia Midi",
+      "quantidade": 1,
+      "precoUnitario": 104.9,
+      "subtotal": 104.9
+    },
+    {
+      "id": "21",
+      "pedidoId": 9,
+      "produtoId": 2,
+      "nomeProduto": "Camisa Social Slim",
+      "quantidade": 1,
+      "precoUnitario": 119.9,
+      "subtotal": 119.9
+    },
+    {
+      "id": "22",
+      "pedidoId": 9,
+      "produtoId": 18,
+      "nomeProduto": "Kit Scrunchies",
+      "quantidade": 4,
+      "precoUnitario": 29.9,
+      "subtotal": 119.6
+    },
+    {
+      "id": "23",
+      "pedidoId": 10,
+      "produtoId": 16,
+      "nomeProduto": "Carteira Slim",
+      "quantidade": 3,
+      "precoUnitario": 59.9,
+      "subtotal": 179.7
+    },
+    {
+      "id": "24",
+      "pedidoId": 10,
+      "produtoId": 6,
+      "nomeProduto": "Blusa Cropped",
+      "quantidade": 4,
+      "precoUnitario": 54.9,
+      "subtotal": 219.6
+    },
+    {
+      "id": "25",
+      "pedidoId": 11,
+      "produtoId": 10,
+      "nomeProduto": "Conjunto Infantil Verão",
+      "quantidade": 3,
+      "precoUnitario": 84.9,
+      "subtotal": 254.7
+    },
+    {
+      "id": "26",
+      "pedidoId": 11,
+      "produtoId": 13,
+      "nomeProduto": "Boné Aba Curva",
+      "quantidade": 4,
+      "precoUnitario": 39.9,
+      "subtotal": 159.6
+    },
+    {
+      "id": "28",
+      "pedidoId": 13,
+      "produtoId": 3,
+      "nomeProduto": "Calça Jeans Reta",
+      "quantidade": 1,
+      "precoUnitario": 159.9,
+      "subtotal": 159.9
+    },
+    {
+      "id": "29",
+      "pedidoId": 14,
+      "produtoId": 17,
+      "nomeProduto": "Meia Kit 3 Pares",
+      "quantidade": 2,
+      "precoUnitario": 34.9,
+      "subtotal": 69.8
+    },
+    {
+      "id": "32",
+      "pedidoId": 16,
+      "produtoId": 14,
+      "nomeProduto": "Cinto Couro",
+      "quantidade": 1,
+      "precoUnitario": 74.9,
+      "subtotal": 74.9
+    },
+    {
+      "id": "33",
+      "pedidoId": 16,
+      "produtoId": 18,
+      "nomeProduto": "Kit Scrunchies",
+      "quantidade": 1,
+      "precoUnitario": 29.9,
+      "subtotal": 29.9
+    },
+    {
+      "id": "34",
+      "pedidoId": 16,
+      "produtoId": 15,
+      "nomeProduto": "Bolsa Tiracolo",
+      "quantidade": 1,
+      "precoUnitario": 129.9,
+      "subtotal": 129.9
+    },
+    {
+      "id": "35",
+      "pedidoId": 17,
+      "produtoId": 8,
+      "nomeProduto": "Saia Midi",
+      "quantidade": 2,
+      "precoUnitario": 104.9,
+      "subtotal": 209.8
+    },
+    {
+      "id": "36",
+      "pedidoId": 18,
+      "produtoId": 9,
+      "nomeProduto": "Body Infantil",
+      "quantidade": 2,
+      "precoUnitario": 49.9,
+      "subtotal": 99.8
+    },
+    {
+      "id": "37",
+      "pedidoId": 18,
+      "produtoId": 15,
+      "nomeProduto": "Bolsa Tiracolo",
+      "quantidade": 1,
+      "precoUnitario": 129.9,
+      "subtotal": 129.9
+    },
+    {
+      "id": "39",
+      "pedidoId": 20,
+      "produtoId": 2,
+      "nomeProduto": "Camisa Social Slim",
+      "quantidade": 1,
+      "precoUnitario": 119.9,
+      "subtotal": 119.9
+    },
+    {
+      "id": "40",
+      "pedidoId": 20,
+      "produtoId": 6,
+      "nomeProduto": "Blusa Cropped",
+      "quantidade": 3,
+      "precoUnitario": 54.9,
+      "subtotal": 164.7
+    },
+    {
+      "id": "41",
+      "pedidoId": 20,
+      "produtoId": 13,
+      "nomeProduto": "Boné Aba Curva",
+      "quantidade": 4,
+      "precoUnitario": 39.9,
+      "subtotal": 159.6
+    },
+    {
+      "id": "42",
+      "pedidoId": 20,
+      "produtoId": 1,
+      "nomeProduto": "Camiseta Básica Algodão",
+      "quantidade": 3,
+      "precoUnitario": 49.9,
+      "subtotal": 149.7
+    },
+    {
+      "id": "43",
+      "pedidoId": 21,
+      "produtoId": 5,
+      "nomeProduto": "Vestido Floral",
+      "quantidade": 1,
+      "precoUnitario": 139.9,
+      "subtotal": 139.9
+    },
+    {
+      "id": "44",
+      "pedidoId": 21,
+      "produtoId": 7,
+      "nomeProduto": "Calça Skinny",
+      "quantidade": 1,
+      "precoUnitario": 159.9,
+      "subtotal": 159.9
+    },
+    {
+      "id": "45",
+      "pedidoId": 21,
+      "produtoId": 10,
+      "nomeProduto": "Conjunto Infantil Verão",
+      "quantidade": 3,
+      "precoUnitario": 84.9,
+      "subtotal": 254.7
+    },
+    {
+      "id": "46",
+      "pedidoId": 21,
+      "produtoId": 4,
+      "nomeProduto": "Bermuda Moletom",
+      "quantidade": 1,
+      "precoUnitario": 69.9,
+      "subtotal": 69.9
+    },
+    {
+      "id": "47",
+      "pedidoId": 22,
+      "produtoId": 2,
+      "nomeProduto": "Camisa Social Slim",
+      "quantidade": 1,
+      "precoUnitario": 119.9,
+      "subtotal": 119.9
+    },
+    {
+      "id": "48",
+      "pedidoId": 22,
+      "produtoId": 17,
+      "nomeProduto": "Meia Kit 3 Pares",
+      "quantidade": 2,
+      "precoUnitario": 34.9,
+      "subtotal": 69.8
+    },
+    {
+      "id": "49",
+      "pedidoId": 23,
+      "produtoId": 13,
+      "nomeProduto": "Boné Aba Curva",
+      "quantidade": 2,
+      "precoUnitario": 39.9,
+      "subtotal": 79.8
+    },
+    {
+      "id": "50",
+      "pedidoId": 23,
+      "produtoId": 4,
+      "nomeProduto": "Bermuda Moletom",
+      "quantidade": 1,
+      "precoUnitario": 69.9,
+      "subtotal": 69.9
+    },
+    {
+      "id": "51",
+      "pedidoId": 24,
+      "produtoId": 9,
+      "nomeProduto": "Body Infantil",
+      "quantidade": 2,
+      "precoUnitario": 49.9,
+      "subtotal": 99.8
+    },
+    {
+      "id": "52",
+      "pedidoId": 24,
+      "produtoId": 7,
+      "nomeProduto": "Calça Skinny",
+      "quantidade": 1,
+      "precoUnitario": 159.9,
+      "subtotal": 159.9
+    },
+    {
+      "id": "53",
+      "pedidoId": 24,
+      "produtoId": 11,
+      "nomeProduto": "Moletom Infantil",
+      "quantidade": 4,
+      "precoUnitario": 79.9,
+      "subtotal": 319.6
+    },
+    {
+      "id": "57",
+      "pedidoId": 26,
+      "produtoId": 8,
+      "nomeProduto": "Saia Midi",
+      "quantidade": 3,
+      "precoUnitario": 104.9,
+      "subtotal": 314.7
+    },
+    {
+      "id": "58",
+      "pedidoId": 27,
+      "produtoId": 17,
+      "nomeProduto": "Meia Kit 3 Pares",
+      "quantidade": 1,
+      "precoUnitario": 34.9,
+      "subtotal": 34.9
+    },
+    {
+      "id": "59",
+      "pedidoId": 27,
+      "produtoId": 1,
+      "nomeProduto": "Camiseta Básica Algodão",
+      "quantidade": 2,
+      "precoUnitario": 49.9,
+      "subtotal": 99.8
+    },
+    {
+      "id": "60",
+      "pedidoId": 27,
+      "produtoId": 10,
+      "nomeProduto": "Conjunto Infantil Verão",
+      "quantidade": 3,
+      "precoUnitario": 84.9,
+      "subtotal": 254.7
+    },
+    {
+      "id": "61",
+      "pedidoId": 28,
+      "produtoId": 9,
+      "nomeProduto": "Body Infantil",
+      "quantidade": 2,
+      "precoUnitario": 49.9,
+      "subtotal": 99.8
+    },
+    {
+      "id": "62",
+      "pedidoId": 28,
+      "produtoId": 10,
+      "nomeProduto": "Conjunto Infantil Verão",
+      "quantidade": 3,
+      "precoUnitario": 84.9,
+      "subtotal": 254.7
+    },
+    {
+      "id": "63",
+      "pedidoId": 29,
+      "produtoId": 9,
+      "nomeProduto": "Body Infantil",
+      "quantidade": 4,
+      "precoUnitario": 49.9,
+      "subtotal": 199.6
+    },
+    {
+      "id": "64",
+      "pedidoId": 29,
+      "produtoId": 2,
+      "nomeProduto": "Camisa Social Slim",
+      "quantidade": 1,
+      "precoUnitario": 119.9,
+      "subtotal": 119.9
+    },
+    {
+      "id": "65",
+      "pedidoId": 29,
+      "produtoId": 3,
+      "nomeProduto": "Calça Jeans Reta",
+      "quantidade": 1,
+      "precoUnitario": 159.9,
+      "subtotal": 159.9
+    },
+    {
+      "id": "66",
+      "pedidoId": 29,
+      "produtoId": 11,
+      "nomeProduto": "Moletom Infantil",
+      "quantidade": 1,
+      "precoUnitario": 79.9,
+      "subtotal": 79.9
+    },
+    {
+      "id": "67",
+      "pedidoId": 30,
+      "produtoId": 6,
+      "nomeProduto": "Blusa Cropped",
+      "quantidade": 1,
+      "precoUnitario": 54.9,
+      "subtotal": 54.9
+    },
+    {
+      "id": "68",
+      "pedidoId": 30,
+      "produtoId": 15,
+      "nomeProduto": "Bolsa Tiracolo",
+      "quantidade": 1,
+      "precoUnitario": 129.9,
+      "subtotal": 129.9
+    },
+    {
+      "id": "69",
+      "pedidoId": 30,
+      "produtoId": 14,
+      "nomeProduto": "Cinto Couro",
+      "quantidade": 1,
+      "precoUnitario": 74.9,
+      "subtotal": 74.9
+    },
+    {
+      "id": "70",
+      "pedidoId": 31,
+      "produtoId": 14,
+      "nomeProduto": "Cinto Couro",
+      "quantidade": 1,
+      "precoUnitario": 74.9,
+      "subtotal": 74.9
+    },
+    {
+      "id": "71",
+      "pedidoId": 31,
+      "produtoId": 5,
+      "nomeProduto": "Vestido Floral",
+      "quantidade": 3,
+      "precoUnitario": 139.9,
+      "subtotal": 419.7
+    },
+    {
+      "id": "72",
+      "pedidoId": 32,
+      "produtoId": 8,
+      "nomeProduto": "Saia Midi",
+      "quantidade": 3,
+      "precoUnitario": 104.9,
+      "subtotal": 314.7
+    },
+    {
+      "id": "73",
+      "pedidoId": 32,
+      "produtoId": 4,
+      "nomeProduto": "Bermuda Moletom",
+      "quantidade": 4,
+      "precoUnitario": 69.9,
+      "subtotal": 279.6
+    },
+    {
+      "id": "74",
+      "pedidoId": 33,
+      "produtoId": 6,
+      "nomeProduto": "Blusa Cropped",
+      "quantidade": 4,
+      "precoUnitario": 54.9,
+      "subtotal": 219.6
+    },
+    {
+      "id": "75",
+      "pedidoId": 33,
+      "produtoId": 18,
+      "nomeProduto": "Kit Scrunchies",
+      "quantidade": 1,
+      "precoUnitario": 29.9,
+      "subtotal": 29.9
+    },
+    {
+      "id": "76",
+      "pedidoId": 34,
+      "produtoId": 8,
+      "nomeProduto": "Saia Midi",
+      "quantidade": 1,
+      "precoUnitario": 104.9,
+      "subtotal": 104.9
+    },
+    {
+      "id": "77",
+      "pedidoId": 34,
+      "produtoId": 9,
+      "nomeProduto": "Body Infantil",
+      "quantidade": 4,
+      "precoUnitario": 49.9,
+      "subtotal": 199.6
+    },
+    {
+      "id": "78",
+      "pedidoId": 34,
+      "produtoId": 6,
+      "nomeProduto": "Blusa Cropped",
+      "quantidade": 1,
+      "precoUnitario": 54.9,
+      "subtotal": 54.9
+    },
+    {
+      "id": "79",
+      "pedidoId": 34,
+      "produtoId": 13,
+      "nomeProduto": "Boné Aba Curva",
+      "quantidade": 4,
+      "precoUnitario": 39.9,
+      "subtotal": 159.6
+    },
+    {
+      "id": "82",
+      "pedidoId": 36,
+      "produtoId": 12,
+      "nomeProduto": "Calça Legging Infantil",
+      "quantidade": 3,
+      "precoUnitario": 44.9,
+      "subtotal": 134.7
+    },
+    {
+      "id": "83",
+      "pedidoId": 36,
+      "produtoId": 17,
+      "nomeProduto": "Meia Kit 3 Pares",
+      "quantidade": 1,
+      "precoUnitario": 34.9,
+      "subtotal": 34.9
+    },
+    {
+      "id": "84",
+      "pedidoId": 36,
+      "produtoId": 13,
+      "nomeProduto": "Boné Aba Curva",
+      "quantidade": 1,
+      "precoUnitario": 39.9,
+      "subtotal": 39.9
+    },
+    {
+      "id": "85",
+      "pedidoId": 37,
+      "produtoId": 2,
+      "nomeProduto": "Camisa Social Slim",
+      "quantidade": 2,
+      "precoUnitario": 119.9,
+      "subtotal": 239.8
+    },
+    {
+      "id": "86",
+      "pedidoId": 37,
+      "produtoId": 4,
+      "nomeProduto": "Bermuda Moletom",
+      "quantidade": 3,
+      "precoUnitario": 69.9,
+      "subtotal": 209.7
+    },
+    {
+      "id": "87",
+      "pedidoId": 37,
+      "produtoId": 14,
+      "nomeProduto": "Cinto Couro",
+      "quantidade": 2,
+      "precoUnitario": 74.9,
+      "subtotal": 149.8
+    },
+    {
+      "id": "90",
+      "pedidoId": 39,
+      "produtoId": 12,
+      "nomeProduto": "Calça Legging Infantil",
+      "quantidade": 1,
+      "precoUnitario": 44.9,
+      "subtotal": 44.9
+    },
+    {
+      "id": "91",
+      "pedidoId": 39,
+      "produtoId": 14,
+      "nomeProduto": "Cinto Couro",
+      "quantidade": 1,
+      "precoUnitario": 74.9,
+      "subtotal": 74.9
+    },
+    {
+      "id": "92",
+      "pedidoId": 40,
+      "produtoId": 17,
+      "nomeProduto": "Meia Kit 3 Pares",
+      "quantidade": 3,
+      "precoUnitario": 34.9,
+      "subtotal": 104.7
+    },
+    {
+      "id": "93",
+      "pedidoId": 40,
+      "produtoId": 10,
+      "nomeProduto": "Conjunto Infantil Verão",
+      "quantidade": 4,
+      "precoUnitario": 84.9,
+      "subtotal": 339.6
+    },
+    {
+      "id": "94",
+      "pedidoId": 40,
+      "produtoId": 14,
+      "nomeProduto": "Cinto Couro",
+      "quantidade": 1,
+      "precoUnitario": 74.9,
+      "subtotal": 74.9
+    },
+    {
+      "id": "95",
+      "pedidoId": 41,
+      "produtoId": 6,
+      "nomeProduto": "Blusa Cropped",
+      "quantidade": 2,
+      "precoUnitario": 54.9,
+      "subtotal": 109.8
+    },
+    {
+      "id": "96",
+      "pedidoId": 41,
+      "produtoId": 10,
+      "nomeProduto": "Conjunto Infantil Verão",
+      "quantidade": 3,
+      "precoUnitario": 84.9,
+      "subtotal": 254.7
+    },
+    {
+      "id": "100",
+      "pedidoId": 43,
+      "produtoId": 6,
+      "nomeProduto": "Blusa Cropped",
+      "quantidade": 3,
+      "precoUnitario": 54.9,
+      "subtotal": 164.7
+    },
+    {
+      "id": "101",
+      "pedidoId": 43,
+      "produtoId": 3,
+      "nomeProduto": "Calça Jeans Reta",
+      "quantidade": 3,
+      "precoUnitario": 159.9,
+      "subtotal": 479.7
+    },
+    {
+      "id": "102",
+      "pedidoId": 43,
+      "produtoId": 10,
+      "nomeProduto": "Conjunto Infantil Verão",
+      "quantidade": 3,
+      "precoUnitario": 84.9,
+      "subtotal": 254.7
+    },
+    {
+      "id": "103",
+      "pedidoId": 44,
+      "produtoId": 10,
+      "nomeProduto": "Conjunto Infantil Verão",
+      "quantidade": 1,
+      "precoUnitario": 84.9,
+      "subtotal": 84.9
+    },
+    {
+      "id": "104",
+      "pedidoId": 45,
+      "produtoId": 3,
+      "nomeProduto": "Calça Jeans Reta",
+      "quantidade": 2,
+      "precoUnitario": 159.9,
+      "subtotal": 319.8
+    },
+    {
+      "id": "105",
+      "pedidoId": 45,
+      "produtoId": 15,
+      "nomeProduto": "Bolsa Tiracolo",
+      "quantidade": 3,
+      "precoUnitario": 129.9,
+      "subtotal": 389.7
+    },
+    {
+      "id": "106",
+      "pedidoId": 46,
+      "produtoId": 13,
+      "nomeProduto": "Boné Aba Curva",
+      "quantidade": 1,
+      "precoUnitario": 39.9,
+      "subtotal": 39.9
+    },
+    {
+      "id": "107",
+      "pedidoId": 46,
+      "produtoId": 8,
+      "nomeProduto": "Saia Midi",
+      "quantidade": 3,
+      "precoUnitario": 104.9,
+      "subtotal": 314.7
+    },
+    {
+      "id": "108",
+      "pedidoId": 47,
+      "produtoId": 14,
+      "nomeProduto": "Cinto Couro",
+      "quantidade": 1,
+      "precoUnitario": 74.9,
+      "subtotal": 74.9
+    },
+    {
+      "id": "109",
+      "pedidoId": 48,
+      "produtoId": 18,
+      "nomeProduto": "Kit Scrunchies",
+      "quantidade": 1,
+      "precoUnitario": 29.9,
+      "subtotal": 29.9
+    },
+    {
+      "pedidoId": 19,
+      "produtoId": 3,
+      "quantidade": 2,
+      "precoUnitario": 159.9,
+      "subtotal": 319.8,
+      "id": "4ET-GYs7-JE"
+    },
+    {
+      "pedidoId": 19,
+      "produtoId": 10,
+      "quantidade": 1,
+      "precoUnitario": 84.9,
+      "subtotal": 84.9,
+      "id": "oLWSb0-7AEE"
+    },
+    {
+      "pedidoId": 25,
+      "produtoId": 3,
+      "quantidade": 1,
+      "precoUnitario": 159.9,
+      "subtotal": 159.9,
+      "id": "iJ4odL9y0jU"
+    },
+    {
+      "pedidoId": 25,
+      "produtoId": 1,
+      "quantidade": 1,
+      "precoUnitario": 49.9,
+      "subtotal": 49.9,
+      "id": "1TcixGxRaCs"
+    },
+    {
+      "pedidoId": 25,
+      "produtoId": 15,
+      "quantidade": 2,
+      "precoUnitario": 129.9,
+      "subtotal": 259.8,
+      "id": "42AZK52lNbU"
+    },
+    {
+      "pedidoId": 42,
+      "produtoId": 11,
+      "quantidade": 2,
+      "precoUnitario": 79.9,
+      "subtotal": 159.8,
+      "id": "UoqKfTd_CIA"
+    },
+    {
+      "pedidoId": 42,
+      "produtoId": 15,
+      "quantidade": 3,
+      "precoUnitario": 129.9,
+      "subtotal": 389.7,
+      "id": "n_fvtSTmI3E"
+    },
+    {
+      "pedidoId": 42,
+      "produtoId": 17,
+      "quantidade": 1,
+      "precoUnitario": 34.9,
+      "subtotal": 34.9,
+      "id": "2o-uneagImE"
+    },
+    {
+      "pedidoId": 15,
+      "produtoId": 16,
+      "quantidade": 4,
+      "precoUnitario": 59.9,
+      "subtotal": 239.6,
+      "id": "6C3Y22a66_c"
+    },
+    {
+      "pedidoId": 15,
+      "produtoId": 8,
+      "quantidade": 4,
+      "precoUnitario": 104.9,
+      "subtotal": 419.6,
+      "id": "GSnxVgws0NY"
+    },
+    {
+      "pedidoId": 35,
+      "produtoId": 8,
+      "quantidade": 2,
+      "precoUnitario": 104.9,
+      "subtotal": 209.8,
+      "id": "0iL9gXPoscI"
+    },
+    {
+      "pedidoId": 35,
+      "produtoId": 1,
+      "quantidade": 4,
+      "precoUnitario": 49.9,
+      "subtotal": 199.6,
+      "id": "KmiDlfeXrl4"
+    },
+    {
+      "pedidoId": 2,
+      "produtoId": 11,
+      "quantidade": 2,
+      "precoUnitario": 79.9,
+      "subtotal": 159.8,
+      "id": "k6ivW0i2tUs"
+    },
+    {
+      "pedidoId": 2,
+      "produtoId": 2,
+      "quantidade": 1,
+      "precoUnitario": 119.9,
+      "subtotal": 119.9,
+      "id": "dgS8tkQb0Ek"
+    },
+    {
+      "pedidoId": 12,
+      "produtoId": 11,
+      "quantidade": 1,
+      "precoUnitario": 79.9,
+      "subtotal": 79.9,
+      "id": "e5M8qHAGP7w"
+    },
+    {
+      "pedidoId": 38,
+      "produtoId": 9,
+      "quantidade": 4,
+      "precoUnitario": 49.9,
+      "subtotal": 199.6,
+      "id": "Jwh7zLmdumM"
+    },
+    {
+      "pedidoId": 38,
+      "produtoId": 2,
+      "quantidade": 1,
+      "precoUnitario": 119.9,
+      "subtotal": 119.9,
+      "id": "DULDqMm3znw"
+    },
+    {
+      "pedidoId": null,
+      "produtoId": 8,
+      "quantidade": 1,
+      "precoUnitario": 104.9,
+      "subtotal": 104.9,
+      "id": "NEoVjeWlNfE"
+    },
+    {
+      "pedidoId": null,
+      "produtoId": 18,
+      "quantidade": 1,
+      "precoUnitario": 29.9,
+      "subtotal": 29.9,
+      "id": "p_QohMAjGMg"
+    },
+    {
+      "pedidoId": null,
+      "produtoId": 10,
+      "quantidade": 1,
+      "precoUnitario": 84.9,
+      "subtotal": 84.9,
+      "id": "Z52pQ_Pfnwc"
+    },
+    {
+      "pedidoId": null,
+      "produtoId": 10,
+      "quantidade": 1,
+      "precoUnitario": 84.9,
+      "subtotal": 84.9,
+      "id": "joe1Bec7ubs"
+    },
+    {
+      "pedidoId": null,
+      "produtoId": 10,
+      "quantidade": 1,
+      "precoUnitario": 84.9,
+      "subtotal": 84.9,
+      "id": "1MtXQPoBhzI"
+    },
+    {
+      "pedidoId": null,
+      "produtoId": 10,
+      "quantidade": 1,
+      "precoUnitario": 84.9,
+      "subtotal": 84.9,
+      "id": "hqzHg2sVi2w"
+    },
+    {
+      "pedidoId": "hoVM6b7pchc",
+      "produtoId": "10",
+      "nomeProduto": "Conjunto Infantil Verão",
+      "quantidade": 1,
+      "precoUnitario": 84.9,
+      "subtotal": 84.9,
+      "id": "-fZyeu5Tm6A"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
