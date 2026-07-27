@@ -19,12 +19,17 @@ document.addEventListener("DOMContentLoaded", () => {
 function configurarEventos() {
     const formCliente = document.getElementById("formCliente");
     const campoBusca = document.getElementById("campoBuscaCliente");
+    const filtroSituacao = document.getElementById("filtroSituacaoCliente");
     const btnNovoCliente = document.getElementById("btnNovoCliente");
 
     formCliente.addEventListener("submit", salvarCliente);
 
-    campoBusca.addEventListener("input", (e) => {
-        filtrarClientes(e.target.value);
+    campoBusca.addEventListener("input", () => {
+        aplicarFiltros();
+    });
+
+    filtroSituacao.addEventListener("change", () => {
+        aplicarFiltros();
     });
 
     btnNovoCliente.addEventListener("click", () => {
@@ -34,20 +39,15 @@ function configurarEventos() {
 
 /**
  * Aplica máscara de CPF no campo enquanto o usuário digita.
- * Formato: 000.000.000-00
  */
 function configurarMascaraCPF() {
     const campoCPF = document.getElementById("cpfCliente");
     if (!campoCPF) return;
 
     campoCPF.addEventListener("input", (e) => {
-        let valor = e.target.value.replace(/\D/g, ""); // Remove tudo que não for número
+        let valor = e.target.value.replace(/\D/g, "");
+        if (valor.length > 11) valor = valor.slice(0, 11);
 
-        if (valor.length > 11) {
-            valor = valor.slice(0, 11); // Limita a 11 dígitos
-        }
-
-        // Aplica a máscara conforme a quantidade de dígitos
         if (valor.length > 9) {
             valor = valor.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, "$1.$2.$3-$4");
         } else if (valor.length > 6) {
@@ -73,7 +73,6 @@ async function carregarClientes() {
         atualizarTotalClientes(clientesFiltrados.length);
     } catch (erro) {
         console.error("Erro ao carregar clientes:", erro);
-
         Swal.fire({
             title: "Erro!",
             text: "Não foi possível carregar os clientes.",
@@ -84,11 +83,9 @@ async function carregarClientes() {
 
 /**
  * Mostra os clientes na tabela.
- * Colunas: Nome, CPF, Endereço, Situação (Ativo/Inativo), Ações
  */
 function renderizarClientes(lista) {
     const tbody = document.getElementById("tabelaClientes");
-
     if (!tbody) return;
 
     if (lista.length === 0) {
@@ -96,7 +93,7 @@ function renderizarClientes(lista) {
       <tr>
         <td colspan="5" class="text-center text-muted py-4">
           <i class="fa-solid fa-users-slash me-2"></i>
-          Nenhum cliente cadastrado.
+          Nenhum cliente encontrado.
         </td>
       </tr>
     `;
@@ -104,7 +101,6 @@ function renderizarClientes(lista) {
     }
 
     tbody.innerHTML = lista.map((cliente) => {
-        // Verifica se está ativo (campo "ativo" booleano)
         const ativo = cliente.ativo === true || cliente.ativo === undefined;
         const situacao = ativo ? "Ativo" : "Inativo";
         const classeBadge = ativo ? "bg-success" : "bg-secondary";
@@ -142,38 +138,51 @@ function renderizarClientes(lista) {
  */
 function atualizarTotalClientes(total) {
     const totalClientesPagina = document.getElementById("totalClientesPagina");
-    if (totalClientesPagina) {
-        totalClientesPagina.textContent = total;
-    }
+    if (totalClientesPagina) totalClientesPagina.textContent = total;
 }
 
 /**
- * Filtra clientes por nome, e-mail, CPF ou endereço.
+ * Aplica os dois filtros: busca por texto + situação (Ativo/Inativo).
  */
-function filtrarClientes(texto) {
-    const termo = String(texto).toLowerCase().trim();
+function aplicarFiltros() {
+    const termoBusca = document.getElementById("campoBuscaCliente")?.value || "";
+    const situacao = document.getElementById("filtroSituacaoCliente")?.value || "";
 
-    clientesFiltrados = clientes.filter((cliente) => {
-        const nome = String(cliente.nome || "").toLowerCase();
-        const email = String(cliente.email || "").toLowerCase();
-        const cpf = String(cliente.cpf || "").toLowerCase();
-        const endereco = String(cliente.endereco || "").toLowerCase();
+    let resultado = [...clientes];
 
-        return (
-            nome.includes(termo) ||
-            email.includes(termo) ||
-            cpf.includes(termo) ||
-            endereco.includes(termo)
-        );
-    });
+    // Filtra por texto (nome, e-mail, CPF, endereço)
+    const termo = String(termoBusca).toLowerCase().trim();
+    if (termo !== "") {
+        resultado = resultado.filter((cliente) => {
+            const nome = String(cliente.nome || "").toLowerCase();
+            const email = String(cliente.email || "").toLowerCase();
+            const cpf = String(cliente.cpf || "").toLowerCase();
+            const endereco = String(cliente.endereco || "").toLowerCase();
+            return nome.includes(termo) || email.includes(termo) || cpf.includes(termo) || endereco.includes(termo);
+        });
+    }
 
+    // Filtra por situação
+    if (situacao === "ativo") {
+        resultado = resultado.filter(c => c.ativo === true || c.ativo === undefined);
+    } else if (situacao === "inativo") {
+        resultado = resultado.filter(c => c.ativo === false);
+    }
+
+    clientesFiltrados = resultado;
     renderizarClientes(clientesFiltrados);
     atualizarTotalClientes(clientesFiltrados.length);
 }
 
 /**
+ * Filtra clientes (mantida para compatibilidade).
+ */
+function filtrarClientes(texto) {
+    aplicarFiltros();
+}
+
+/**
  * Prepara o modal para um novo cliente.
- * Sempre inicia com campos vazios.
  */
 function prepararFormularioNovo() {
     document.getElementById("tituloModalCliente").textContent = "Novo cliente";
@@ -190,11 +199,7 @@ function prepararFormularioNovo() {
 async function editarCliente(id) {
     try {
         const resposta = await fetch(`${API_BASE}/clientes/${id}`);
-
-        if (!resposta.ok) {
-            throw new Error("Cliente não encontrado");
-        }
-
+        if (!resposta.ok) throw new Error("Cliente não encontrado");
         const cliente = await resposta.json();
 
         document.getElementById("tituloModalCliente").textContent = "Editar cliente";
@@ -205,38 +210,20 @@ async function editarCliente(id) {
         document.getElementById("enderecoCliente").value = cliente.endereco || "";
 
         modalCliente.show();
-
     } catch (erro) {
         console.error("Erro ao carregar cliente para edição:", erro);
-
-        Swal.fire({
-            title: "Erro!",
-            text: "Não foi possível carregar os dados do cliente.",
-            icon: "error"
-        });
+        Swal.fire({ title: "Erro!", text: "Não foi possível carregar os dados do cliente.", icon: "error" });
     }
 }
 
-/**
- * Valida se o CPF tem 11 dígitos (após remover a máscara).
- */
 function validarCPF(cpf) {
-    const numeros = cpf.replace(/\D/g, "");
-    return numeros.length === 11;
+    return cpf.replace(/\D/g, "").length === 11;
 }
 
-/**
- * Valida formato de e-mail com regex simples.
- */
 function validarEmail(email) {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-/**
- * Verifica se o CPF já existe em outro cliente.
- * Na edição, ignora o próprio registro.
- */
 function cpfDuplicado(cpf, idIgnorar) {
     const cpfLimpo = cpf.replace(/\D/g, "");
     return clientes.some(cliente => {
@@ -246,10 +233,6 @@ function cpfDuplicado(cpf, idIgnorar) {
     });
 }
 
-/**
- * Verifica se o e-mail já existe em outro cliente.
- * Na edição, ignora o próprio registro.
- */
 function emailDuplicado(email, idIgnorar) {
     const emailLimpo = email.toLowerCase().trim();
     return clientes.some(cliente => {
@@ -259,9 +242,6 @@ function emailDuplicado(email, idIgnorar) {
     });
 }
 
-/**
- * Salva cliente novo ou atualizado.
- */
 async function salvarCliente(evento) {
     evento.preventDefault();
 
@@ -271,213 +251,79 @@ async function salvarCliente(evento) {
     const cpf = document.getElementById("cpfCliente").value.trim();
     const endereco = document.getElementById("enderecoCliente").value.trim();
 
-    // Validações
     if (!nome || !email || !cpf || !endereco) {
-        Swal.fire({
-            title: "Atenção!",
-            text: "Todos os campos são obrigatórios.",
-            icon: "warning"
-        });
-        return;
+        Swal.fire({ title: "Atenção!", text: "Todos os campos são obrigatórios.", icon: "warning" }); return;
     }
-
     if (!validarCPF(cpf)) {
-        Swal.fire({
-            title: "CPF inválido!",
-            text: "O CPF deve conter exatamente 11 números.",
-            icon: "warning"
-        });
-        return;
+        Swal.fire({ title: "CPF inválido!", text: "O CPF deve conter exatamente 11 números.", icon: "warning" }); return;
     }
-
     if (!validarEmail(email)) {
-        Swal.fire({
-            title: "E-mail inválido!",
-            text: "Informe um e-mail no formato correto (exemplo@dominio.com).",
-            icon: "warning"
-        });
-        return;
+        Swal.fire({ title: "E-mail inválido!", text: "Informe um e-mail no formato correto.", icon: "warning" }); return;
     }
-
     if (cpfDuplicado(cpf, id)) {
-        Swal.fire({
-            title: "CPF duplicado!",
-            text: "Já existe um cliente cadastrado com este CPF.",
-            icon: "warning"
-        });
-        return;
+        Swal.fire({ title: "CPF duplicado!", text: "Já existe um cliente com este CPF.", icon: "warning" }); return;
     }
-
     if (emailDuplicado(email, id)) {
-        Swal.fire({
-            title: "E-mail duplicado!",
-            text: "Já existe um cliente cadastrado com este e-mail.",
-            icon: "warning"
-        });
-        return;
+        Swal.fire({ title: "E-mail duplicado!", text: "Já existe um cliente com este e-mail.", icon: "warning" }); return;
     }
 
-    // Monta o objeto cliente
-    const cliente = {
-        nome,
-        email,
-        cpf,
-        endereco,
-        ativo: id ? undefined : true // Na criação, ativo = true. Na edição, não altera o campo.
-    };
+    const cliente = { nome, email, cpf, endereco, ativo: id ? undefined : true };
+    if (id) delete cliente.ativo;
 
-    // Remove undefined para não sobrescrever na edição
-    if (id) {
-        delete cliente.ativo;
-    }
-
-    // Confirmação antes de salvar
     const confirmacao = await Swal.fire({
         title: id ? "Confirmar atualização?" : "Confirmar cadastro?",
-        text: id
-            ? "Deseja realmente atualizar este cliente?"
-            : "Deseja cadastrar este novo cliente?",
-        icon: "question",
-        showCancelButton: true,
-        confirmButtonColor: "#198754",
-        cancelButtonColor: "#6c757d",
-        confirmButtonText: "Sim, salvar",
-        cancelButtonText: "Cancelar"
+        text: id ? "Deseja realmente atualizar este cliente?" : "Deseja cadastrar este novo cliente?",
+        icon: "question", showCancelButton: true, confirmButtonColor: "#198754", cancelButtonColor: "#6c757d",
+        confirmButtonText: "Sim, salvar", cancelButtonText: "Cancelar"
     });
-
     if (!confirmacao.isConfirmed) return;
 
     try {
         if (id) {
-            await fetch(`${API_BASE}/clientes/${id}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(cliente)
-            });
+            await fetch(`${API_BASE}/clientes/${id}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(cliente) });
         } else {
-            await fetch(`${API_BASE}/clientes`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(cliente)
-            });
+            await fetch(`${API_BASE}/clientes`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(cliente) });
         }
 
         modalCliente.hide();
         await carregarClientes();
-
-        Swal.fire({
-            title: id ? "Atualizado!" : "Cadastrado!",
-            text: id ? "Cliente atualizado com sucesso." : "Cliente cadastrado com sucesso.",
-            icon: "success",
-            timer: 2000,
-            showConfirmButton: false
-        });
-
+        Swal.fire({ title: id ? "Atualizado!" : "Cadastrado!", text: id ? "Cliente atualizado com sucesso." : "Cliente cadastrado com sucesso.", icon: "success", timer: 2000, showConfirmButton: false });
     } catch (erro) {
         console.error("Erro ao salvar cliente:", erro);
-
-        Swal.fire({
-            title: "Erro!",
-            text: "Não foi possível salvar o cliente.",
-            icon: "error"
-        });
+        Swal.fire({ title: "Erro!", text: "Não foi possível salvar o cliente.", icon: "error" });
     }
 }
 
-/**
- * Inativa um cliente (altera ativo para false).
- */
 async function inativarCliente(id) {
     const resultado = await Swal.fire({
-        title: "Inativar cliente?",
-        text: "O cliente ficará inativo e não poderá ser selecionado em novos pedidos.",
-        icon: "question",
-        showCancelButton: true,
-        confirmButtonColor: "#ffc107",
-        cancelButtonColor: "#6c757d",
-        confirmButtonText: "Sim, inativar",
-        cancelButtonText: "Cancelar"
+        title: "Inativar cliente?", text: "O cliente ficará inativo e não poderá ser selecionado em novos pedidos.",
+        icon: "question", showCancelButton: true, confirmButtonColor: "#ffc107", cancelButtonColor: "#6c757d",
+        confirmButtonText: "Sim, inativar", cancelButtonText: "Cancelar"
     });
-
     if (!resultado.isConfirmed) return;
 
     try {
-        await fetch(`${API_BASE}/clientes/${id}`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ ativo: false })
-        });
-
+        await fetch(`${API_BASE}/clientes/${id}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ativo: false }) });
         await carregarClientes();
-
-        Swal.fire({
-            title: "Inativado!",
-            text: "Cliente inativado com sucesso.",
-            icon: "success",
-            timer: 2000,
-            showConfirmButton: false
-        });
-
+        Swal.fire({ title: "Inativado!", text: "Cliente inativado com sucesso.", icon: "success", timer: 2000, showConfirmButton: false });
     } catch (erro) {
-        console.error("Erro ao inativar cliente:", erro);
-
-        Swal.fire({
-            title: "Erro!",
-            text: "Não foi possível inativar o cliente.",
-            icon: "error"
-        });
+        Swal.fire({ title: "Erro!", text: "Não foi possível inativar o cliente.", icon: "error" });
     }
 }
 
-/**
- * Reativa um cliente (altera ativo para true).
- */
 async function reativarCliente(id) {
     const resultado = await Swal.fire({
-        title: "Reativar cliente?",
-        text: "O cliente voltará a ficar ativo e poderá ser selecionado em novos pedidos.",
-        icon: "question",
-        showCancelButton: true,
-        confirmButtonColor: "#198754",
-        cancelButtonColor: "#6c757d",
-        confirmButtonText: "Sim, reativar",
-        cancelButtonText: "Cancelar"
+        title: "Reativar cliente?", text: "O cliente voltará a ficar ativo e poderá ser selecionado em novos pedidos.",
+        icon: "question", showCancelButton: true, confirmButtonColor: "#198754", cancelButtonColor: "#6c757d",
+        confirmButtonText: "Sim, reativar", cancelButtonText: "Cancelar"
     });
-
     if (!resultado.isConfirmed) return;
 
     try {
-        await fetch(`${API_BASE}/clientes/${id}`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ ativo: true })
-        });
-
+        await fetch(`${API_BASE}/clientes/${id}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ativo: true }) });
         await carregarClientes();
-
-        Swal.fire({
-            title: "Reativado!",
-            text: "Cliente reativado com sucesso.",
-            icon: "success",
-            timer: 2000,
-            showConfirmButton: false
-        });
-
+        Swal.fire({ title: "Reativado!", text: "Cliente reativado com sucesso.", icon: "success", timer: 2000, showConfirmButton: false });
     } catch (erro) {
-        console.error("Erro ao reativar cliente:", erro);
-
-        Swal.fire({
-            title: "Erro!",
-            text: "Não foi possível reativar o cliente.",
-            icon: "error"
-        });
+        Swal.fire({ title: "Erro!", text: "Não foi possível reativar o cliente.", icon: "error" });
     }
 }

@@ -20,7 +20,7 @@
   <!-- AOS.js -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.css" />
 
-  <!-- CSS do projeto (CORRIGIDO: precisa subir uma pasta, igual o JS faz) -->
+  <!-- CSS do projeto -->
   <link rel="stylesheet" href="../css/style.css" />
 </head>
 <body class="bg-light">
@@ -76,11 +76,11 @@
         </button>
       </header>
 
-      <!-- Barra de busca -->
+      <!-- Busca e Filtro por Situação -->
       <section class="card shadow-sm border-0 mb-4" data-aos="fade-up">
         <div class="card-body">
-          <div class="row g-3 align-items-center">
-            <div class="col-12 col-md-8">
+          <div class="row g-3 align-items-end">
+            <div class="col-12 col-md-5">
               <label for="campoBuscaCliente" class="form-label">Buscar cliente</label>
               <input
                 type="text"
@@ -89,9 +89,16 @@
                 placeholder="Digite nome, e-mail, CPF ou endereço..."
               />
             </div>
-
+            <div class="col-12 col-md-3">
+              <label for="filtroSituacaoCliente" class="form-label">Filtrar por situação</label>
+              <select class="form-select" id="filtroSituacaoCliente">
+                <option value="">Todos</option>
+                <option value="ativo">Ativo</option>
+                <option value="inativo">Inativo</option>
+              </select>
+            </div>
             <div class="col-12 col-md-4 text-md-end">
-              <p class="text-muted mb-0 mt-md-4">
+              <p class="text-muted mb-0">
                 Total de clientes: <strong id="totalClientesPagina">0</strong>
               </p>
             </div>
