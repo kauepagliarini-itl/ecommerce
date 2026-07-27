@@ -143,7 +143,7 @@
         </div>
       </section>
 
-      <!-- Cards: Faturamento e Ticket Médio -->
+      <!-- Cards: Faturamento e Total de Clientes -->
       <section class="row g-3 mb-4">
         <div class="col-12 col-sm-6" data-aos="fade-up">
           <article class="card shadow-sm border-0 h-100">
@@ -170,12 +170,12 @@
         </div>
       </section>
 
-      <!-- Filtro por categoria -->
+      <!-- Filtros: Categoria, Mês e Ano -->
       <section class="card shadow-sm border-0 mb-4" data-aos="fade-up">
         <div class="card-body">
-          <div class="row g-3 align-items-center">
-            <div class="col-12 col-md-4">
-              <label for="filtroCategoria" class="form-label">Filtrar por categoria</label>
+          <div class="row g-3 align-items-end">
+            <div class="col-12 col-md-3">
+              <label for="filtroCategoria" class="form-label">Categoria</label>
               <select class="form-select" id="filtroCategoria">
                 <option value="">Todas as categorias</option>
                 <option value="masculino">Masculino</option>
@@ -184,17 +184,41 @@
                 <option value="acessórios">Acessórios</option>
               </select>
             </div>
-            <div class="col-12 col-md-8">
-              <p class="text-muted mb-0 mt-md-4">
+            <div class="col-12 col-md-2">
+              <label for="filtroMes" class="form-label">Mês</label>
+              <select class="form-select" id="filtroMes">
+                <option value="">Todos</option>
+                <option value="01">Janeiro</option>
+                <option value="02">Fevereiro</option>
+                <option value="03">Março</option>
+                <option value="04">Abril</option>
+                <option value="05">Maio</option>
+                <option value="06">Junho</option>
+                <option value="07">Julho</option>
+                <option value="08">Agosto</option>
+                <option value="09">Setembro</option>
+                <option value="10">Outubro</option>
+                <option value="11">Novembro</option>
+                <option value="12">Dezembro</option>
+              </select>
+            </div>
+            <div class="col-12 col-md-2">
+              <label for="filtroAno" class="form-label">Ano</label>
+              <select class="form-select" id="filtroAno">
+                <option value="">Todos</option>
+              </select>
+            </div>
+            <div class="col-12 col-md-5">
+              <p class="text-muted mb-0">
                 <i class="fa-solid fa-info-circle me-1"></i>
-                O filtro recalcula o faturamento e o ranking apenas para a categoria selecionada.
+                Os filtros recalculam os cards, gráficos e ranking em tempo real.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-            <!-- Gráficos: Status (pizza) e Faturamento por categoria (barras) -->
+      <!-- Gráficos: Status (pizza) e Faturamento por categoria (barras) -->
       <section class="row g-3 mb-4">
 
         <div class="col-12 col-lg-5" data-aos="fade-up">
@@ -305,10 +329,7 @@
   <!-- AOS.js -->
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
   <script>
-    // Inicializa as animações de entrada (roda uma vez só, não mexe no resto do site)
     AOS.init({ duration: 500, once: true });
-
-    // Mostra a data de hoje na topbar
     document.getElementById("dataAtualTopbar").textContent =
       new Date().toLocaleDateString("pt-BR", { weekday: "long", day: "2-digit", month: "long", year: "numeric" });
   </script>

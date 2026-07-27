@@ -14,23 +14,80 @@ let graficoFaturamentoCategoria = null;
 
 document.addEventListener("DOMContentLoaded", () => {
   carregarDashboard();
-  configurarFiltro();
+  configurarFiltros();
 });
 
 /**
- * Configura o evento de mudança no filtro de categoria.
- * Quando o usuário seleciona uma categoria, os cálculos são refeitos.
+ * Configura os eventos de mudança nos filtros (categoria, mês, ano).
+ * Qualquer alteração dispara o recálculo de todo o dashboard.
  */
-function configurarFiltro() {
-  const filtro = document.getElementById("filtroCategoria");
-  if (filtro) {
-    filtro.addEventListener("change", () => {
-      const categoriaSelecionada = filtro.value;
-      // Recalcula tudo com base na categoria escolhida
-      renderizarFaturamentoPorCategoria(categoriaSelecionada);
-      renderizarRankingProdutos(categoriaSelecionada);
-    });
-  }
+function configurarFiltros() {
+  const filtroCategoria = document.getElementById("filtroCategoria");
+  const filtroMes = document.getElementById("filtroMes");
+  const filtroAno = document.getElementById("filtroAno");
+
+  if (filtroCategoria) filtroCategoria.addEventListener("change", recarregarComFiltros);
+  if (filtroMes) filtroMes.addEventListener("change", recarregarComFiltros);
+  if (filtroAno) filtroAno.addEventListener("change", recarregarComFiltros);
+}
+
+/**
+ * Lê os valores atuais dos filtros e atualiza todo o dashboard.
+ */
+function recarregarComFiltros() {
+  const categoria = document.getElementById("filtroCategoria")?.value || "";
+  const mes = document.getElementById("filtroMes")?.value || "";
+  const ano = document.getElementById("filtroAno")?.value || "";
+
+  const pedidosFiltrados = aplicarFiltroData(todosPedidos, mes, ano);
+
+  // Re-renderiza tudo com os dados filtrados
+  renderizarCardsStatus(pedidosFiltrados);
+  renderizarFaturamentoTotal(pedidosFiltrados);
+  renderizarGraficoStatus(pedidosFiltrados);
+  renderizarFaturamentoPorCategoria(categoria, mes, ano);
+  renderizarRankingProdutos(categoria, mes, ano);
+}
+
+/**
+ * Filtra pedidos por mês e ano.
+ * Usa o campo "data" ou "dataPedido" do pedido.
+ */
+function aplicarFiltroData(pedidos, mes, ano) {
+  return pedidos.filter(p => {
+    const dataPedido = p.data || p.dataPedido;
+    if (!dataPedido) return true; // sem data = mostra sempre
+
+    const partes = dataPedido.split("-"); // formato "YYYY-MM-DD"
+    const anoPedido = partes[0];
+    const mesPedido = partes[1];
+
+    if (ano && anoPedido !== ano) return false;
+    if (mes && mesPedido !== mes) return false;
+    return true;
+  });
+}
+
+/**
+ * Preenche o select de anos com base nos pedidos existentes.
+ */
+function preencherAnos() {
+  const selectAno = document.getElementById("filtroAno");
+  if (!selectAno) return;
+
+  const anos = new Set();
+  todosPedidos.forEach(p => {
+    const data = p.data || p.dataPedido;
+    if (data) {
+      const ano = data.split("-")[0];
+      if (ano) anos.add(ano);
+    }
+  });
+
+  const anosOrdenados = [...anos].sort().reverse();
+
+  selectAno.innerHTML = `<option value="">Todos</option>` +
+    anosOrdenados.map(ano => `<option value="${ano}">${ano}</option>`).join("");
 }
 
 /**
@@ -48,13 +105,16 @@ async function carregarDashboard() {
       buscarDados("itensPedido"),
     ]);
 
-    // Guarda os dados para usar no filtro depois
+    // Guarda os dados para usar nos filtros depois
     todosClientes = clientes;
     todosProdutos = produtos;
     todosPedidos = pedidos;
     todosItens = itens;
 
     fecharLoading();
+
+    // Preenche o select de anos dinamicamente
+    preencherAnos();
 
     // Cards de contagem por status
     renderizarCardsStatus(pedidos);
@@ -69,10 +129,10 @@ async function carregarDashboard() {
     renderizarGraficoStatus(pedidos);
 
     // Gráfico de barras (faturamento por categoria - apenas entregues)
-    renderizarFaturamentoPorCategoria("");
+    renderizarFaturamentoPorCategoria("", "", "");
 
     // Ranking de produtos mais vendidos (entregues + clientes ativos)
-    renderizarRankingProdutos("");
+    renderizarRankingProdutos("", "", "");
 
     // Tabela de estoque baixo
     renderizarEstoqueBaixo(produtos);
@@ -92,12 +152,7 @@ async function carregarDashboard() {
    CARDS DE STATUS
    ================================================================ */
 
-/**
- * Renderiza os 5 cards com a contagem de pedidos por status.
- * Status esperados: aguardando pagamento, pago, enviado, entregue, cancelado
- */
 function renderizarCardsStatus(pedidos) {
-  // Inicializa o contador com 0 para cada status
   const contagem = {
     "aguardando pagamento": 0,
     "pago": 0,
@@ -106,10 +161,8 @@ function renderizarCardsStatus(pedidos) {
     "cancelado": 0
   };
 
-  // Conta cada pedido pelo status normalizado
   pedidos.forEach(pedido => {
     const status = normalizarTexto(pedido.status);
-    // Mapeia variações para os status padrão
     if (status.includes("aguard")) contagem["aguardando pagamento"]++;
     else if (status.includes("pago") && !status.includes("aguard")) contagem["pago"]++;
     else if (status.includes("enviado") || status.includes("enviar")) contagem["enviado"]++;
@@ -117,7 +170,6 @@ function renderizarCardsStatus(pedidos) {
     else if (status.includes("cancel")) contagem["cancelado"]++;
   });
 
-  // Atualiza os elementos no HTML
   document.getElementById("cardAguardando").textContent = contagem["aguardando pagamento"];
   document.getElementById("cardPago").textContent = contagem["pago"];
   document.getElementById("cardEnviado").textContent = contagem["enviado"];
@@ -129,9 +181,6 @@ function renderizarCardsStatus(pedidos) {
    FATURAMENTO TOTAL (apenas entregues)
    ================================================================ */
 
-/**
- * Calcula e exibe o faturamento total somando apenas pedidos com status "entregue".
- */
 function renderizarFaturamentoTotal(pedidos) {
   const total = pedidos
     .filter(p => normalizarTexto(p.status).includes("entreg"))
@@ -144,41 +193,32 @@ function renderizarFaturamentoTotal(pedidos) {
    FATURAMENTO POR CATEGORIA (gráfico de barras)
    ================================================================ */
 
-/**
- * Renderiza o gráfico de faturamento por categoria.
- * Considera apenas pedidos com status "entregue".
- * Se uma categoria for passada, filtra os itens por ela.
- */
-function renderizarFaturamentoPorCategoria(categoriaFiltro) {
+function renderizarFaturamentoPorCategoria(categoriaFiltro, mes, ano) {
   const canvas = document.getElementById("graficoFaturamentoCategoria");
   const msgVazio = document.getElementById("msgGraficoCategoriaVazio");
-
   if (!canvas) return;
 
+  // Aplica filtro de data
+  const pedidosFiltrados = aplicarFiltroData(todosPedidos, mes, ano);
+
   // Pega apenas pedidos entregues
-  const pedidosEntregues = todosPedidos.filter(p =>
+  const pedidosEntregues = pedidosFiltrados.filter(p =>
     normalizarTexto(p.status).includes("entreg")
   );
 
-  // Pega os IDs dos pedidos entregues
-  const idsEntregues = pedidosEntregues.map(p => Number(p.id));
+  const idsEntregues = pedidosEntregues.map(p => String(p.id));
 
-  // Filtra os itens desses pedidos
   let itensFiltrados = todosItens.filter(item =>
-    idsEntregues.includes(Number(item.pedidoId))
+    idsEntregues.includes(String(item.pedidoId))
   );
 
-  // Mapeia cada item ao seu produto para saber a categoria
-  // Agrupa faturamento por categoria do produto
   const faturamentoPorCategoria = {};
 
   itensFiltrados.forEach(item => {
-    const produto = todosProdutos.find(p => Number(p.id) === Number(item.produtoId));
+    const produto = todosProdutos.find(p => String(p.id) === String(item.produtoId));
     if (!produto) return;
 
     const categoria = (produto.categoria || "sem categoria").toLowerCase();
-
-    // Se tem filtro e a categoria não bate, pula
     if (categoriaFiltro && categoria !== categoriaFiltro.toLowerCase()) return;
 
     const subtotal = Number(item.subtotal) || (Number(item.quantidade) * Number(item.precoUnitario)) || 0;
@@ -188,25 +228,17 @@ function renderizarFaturamentoPorCategoria(categoriaFiltro) {
   const labels = Object.keys(faturamentoPorCategoria);
   const valores = Object.values(faturamentoPorCategoria);
 
-  // Se não tem dados, mostra mensagem e esconde canvas
   if (labels.length === 0) {
     canvas.parentElement.style.display = "none";
     if (msgVazio) msgVazio.classList.remove("d-none");
-    if (graficoFaturamentoCategoria) {
-      graficoFaturamentoCategoria.destroy();
-      graficoFaturamentoCategoria = null;
-    }
+    if (graficoFaturamentoCategoria) { graficoFaturamentoCategoria.destroy(); graficoFaturamentoCategoria = null; }
     return;
   }
 
-  // Mostra o canvas e esconde a mensagem
   canvas.parentElement.style.display = "block";
   if (msgVazio) msgVazio.classList.add("d-none");
-
-  // Destroi gráfico anterior se existir
   if (graficoFaturamentoCategoria) graficoFaturamentoCategoria.destroy();
 
-  // Cores por categoria
   const cores = labels.map(cat => {
     if (cat.includes("masculino")) return "#0d6efd";
     if (cat.includes("feminino")) return "#d63384";
@@ -228,17 +260,11 @@ function renderizarFaturamentoPorCategoria(categoriaFiltro) {
     },
     options: {
       responsive: true,
-      plugins: {
-        legend: { display: false }
-      },
+      plugins: { legend: { display: false } },
       scales: {
         y: {
           beginAtZero: true,
-          ticks: {
-            callback: function(value) {
-              return "R$ " + value.toFixed(0);
-            }
-          }
+          ticks: { callback: function(value) { return "R$ " + value.toFixed(0); } }
         }
       }
     }
@@ -249,22 +275,18 @@ function renderizarFaturamentoPorCategoria(categoriaFiltro) {
    RANKING DE PRODUTOS MAIS VENDIDOS
    ================================================================ */
 
-/**
- * Renderiza a tabela de ranking de produtos mais vendidos.
- * Considera apenas pedidos "entregues" e clientes "ativos".
- * Se uma categoria for passada, filtra por ela.
- */
-function renderizarRankingProdutos(categoriaFiltro) {
+function renderizarRankingProdutos(categoriaFiltro, mes, ano) {
   const tbody = document.getElementById("tabelaRankingProdutos");
   if (!tbody) return;
 
-  // Clientes ativos (campo "ativo" = true OU campo "status" = "Ativo")
   const clientesAtivosIds = todosClientes
     .filter(c => c.ativo === true || c.status === "Ativo")
     .map(c => String(c.id));
 
-  // Pedidos entregues cujo cliente é ativo
-  const pedidosValidos = todosPedidos.filter(p => {
+  // Aplica filtro de data
+  const pedidosFiltrados = aplicarFiltroData(todosPedidos, mes, ano);
+
+  const pedidosValidos = pedidosFiltrados.filter(p => {
     const statusOk = normalizarTexto(p.status).includes("entreg");
     const clienteAtivo = clientesAtivosIds.includes(String(p.clienteId));
     return statusOk && clienteAtivo;
@@ -272,19 +294,16 @@ function renderizarRankingProdutos(categoriaFiltro) {
 
   const idsPedidosValidos = pedidosValidos.map(p => String(p.id));
 
-  // Itens desses pedidos
   let itensFiltrados = todosItens.filter(item =>
     idsPedidosValidos.includes(String(item.pedidoId))
   );
 
-  // Agrupa por produto, somando quantidade vendida e valor total
   const ranking = {};
 
   itensFiltrados.forEach(item => {
     const produto = todosProdutos.find(p => String(p.id) === String(item.produtoId));
     if (!produto) return;
 
-    // Se tem filtro de categoria, verifica se o produto bate
     if (categoriaFiltro && (produto.categoria || "").toLowerCase() !== categoriaFiltro.toLowerCase()) return;
 
     const produtoId = String(item.produtoId);
@@ -301,22 +320,13 @@ function renderizarRankingProdutos(categoriaFiltro) {
     ranking[produtoId].total += Number(item.subtotal) || (Number(item.quantidade) * Number(item.precoUnitario)) || 0;
   });
 
-  // Converte para array e ordena por valor total (maior primeiro)
   const lista = Object.values(ranking).sort((a, b) => b.total - a.total);
 
-  // Se não tem dados
   if (lista.length === 0) {
-    tbody.innerHTML = `
-      <tr>
-        <td colspan="5" class="text-center text-muted py-4">
-          Nenhum dado disponível
-        </td>
-      </tr>
-    `;
+    tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted py-4">Nenhum dado disponível</td></tr>`;
     return;
   }
 
-  // Renderiza a tabela
   tbody.innerHTML = lista.map((item, index) => `
     <tr>
       <td><strong>${index + 1}º</strong></td>
@@ -332,22 +342,15 @@ function renderizarRankingProdutos(categoriaFiltro) {
    GRÁFICO DE STATUS (pizza)
    ================================================================ */
 
-/**
- * Renderiza o gráfico de pizza com a distribuição de pedidos por status.
- */
 function renderizarGraficoStatus(pedidos) {
   const canvas = document.getElementById("graficoStatus");
   const msgVazio = document.getElementById("msgGraficoStatusVazio");
-
   if (!canvas) return;
 
   if (pedidos.length === 0) {
     canvas.parentElement.style.display = "none";
     if (msgVazio) msgVazio.classList.remove("d-none");
-    if (graficoStatus) {
-      graficoStatus.destroy();
-      graficoStatus = null;
-    }
+    if (graficoStatus) { graficoStatus.destroy(); graficoStatus = null; }
     return;
   }
 
@@ -355,7 +358,6 @@ function renderizarGraficoStatus(pedidos) {
   if (msgVazio) msgVazio.classList.add("d-none");
 
   const contagem = {};
-
   pedidos.forEach(p => {
     const status = p.status || "Sem status";
     contagem[status] = (contagem[status] || 0) + 1;
@@ -363,7 +365,6 @@ function renderizarGraficoStatus(pedidos) {
 
   const labels = Object.keys(contagem);
   const valores = Object.values(contagem);
-
   const cores = labels.map(label => {
     const t = normalizarTexto(label);
     if (t.includes("entreg")) return "#0dcaf0";
@@ -378,22 +379,8 @@ function renderizarGraficoStatus(pedidos) {
 
   graficoStatus = new Chart(canvas, {
     type: "pie",
-    data: {
-      labels,
-      datasets: [{
-        data: valores,
-        backgroundColor: cores,
-        borderWidth: 1
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: {
-          position: "bottom"
-        }
-      }
-    }
+    data: { labels, datasets: [{ data: valores, backgroundColor: cores, borderWidth: 1 }] },
+    options: { responsive: true, plugins: { legend: { position: "bottom" } } }
   });
 }
 
@@ -401,30 +388,18 @@ function renderizarGraficoStatus(pedidos) {
    ESTOQUE BAIXO
    ================================================================ */
 
-/**
- * Renderiza a tabela de produtos com estoque menor ou igual a 5.
- */
 function renderizarEstoqueBaixo(produtos) {
   const tbody = document.getElementById("tabelaEstoqueBaixo");
   if (!tbody) return;
 
   const lista = produtos
-    .map(p => ({
-      ...p,
-      estoqueAtual: Number(p.estoque ?? 0)
-    }))
+    .map(p => ({ ...p, estoqueAtual: Number(p.estoque ?? 0) }))
     .filter(p => p.estoqueAtual <= 5)
     .sort((a, b) => a.estoqueAtual - b.estoqueAtual)
     .slice(0, 10);
 
   if (lista.length === 0) {
-    tbody.innerHTML = `
-      <tr>
-        <td colspan="3" class="text-center text-muted py-4">
-          Nenhum dado disponível
-        </td>
-      </tr>
-    `;
+    tbody.innerHTML = `<tr><td colspan="3" class="text-center text-muted py-4">Nenhum dado disponível</td></tr>`;
     return;
   }
 
@@ -432,11 +407,7 @@ function renderizarEstoqueBaixo(produtos) {
     <tr>
       <td>${p.nome || "-"}</td>
       <td>${p.categoria || "-"}</td>
-      <td>
-        <span class="badge bg-danger">
-          ${p.estoqueAtual}
-        </span>
-      </td>
+      <td><span class="badge bg-danger">${p.estoqueAtual}</span></td>
     </tr>
   `).join("");
 }
@@ -445,17 +416,12 @@ function renderizarEstoqueBaixo(produtos) {
    UTILITÁRIOS
    ================================================================ */
 
-/**
- * Loading com SweetAlert
- */
 function mostrarLoading() {
   Swal.fire({
     title: "Carregando...",
     text: "Buscando dados do sistema",
     allowOutsideClick: false,
-    didOpen: () => {
-      Swal.showLoading();
-    }
+    didOpen: () => { Swal.showLoading(); }
   });
 }
 
@@ -463,32 +429,16 @@ function fecharLoading() {
   Swal.close();
 }
 
-/**
- * Fetch genérico
- */
 async function buscarDados(endpoint) {
   const resposta = await fetch(`${API_BASE}/${endpoint}`);
-
-  if (!resposta.ok) {
-    throw new Error(`Erro ao buscar ${endpoint} (status ${resposta.status})`);
-  }
-
+  if (!resposta.ok) throw new Error(`Erro ao buscar ${endpoint} (status ${resposta.status})`);
   return resposta.json();
 }
 
-/**
- * Formata moeda brasileira
- */
 function formatarMoeda(valor) {
-  return new Intl.NumberFormat("pt-BR", {
-    style: "currency",
-    currency: "BRL"
-  }).format(Number(valor) || 0);
+  return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(Number(valor) || 0);
 }
 
-/**
- * Normaliza texto para comparação (minúsculo, sem espaços extras)
- */
 function normalizarTexto(texto) {
   return String(texto || "").toLowerCase().trim();
 }
