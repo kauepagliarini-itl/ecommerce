@@ -13,9 +13,6 @@ document.addEventListener("DOMContentLoaded", () => {
     configurarMascaraCPF();
 });
 
-/**
- * Liga os eventos da página.
- */
 function configurarEventos() {
     const formCliente = document.getElementById("formCliente");
     const campoBusca = document.getElementById("campoBuscaCliente");
@@ -23,23 +20,11 @@ function configurarEventos() {
     const btnNovoCliente = document.getElementById("btnNovoCliente");
 
     formCliente.addEventListener("submit", salvarCliente);
-
-    campoBusca.addEventListener("input", () => {
-        aplicarFiltros();
-    });
-
-    filtroSituacao.addEventListener("change", () => {
-        aplicarFiltros();
-    });
-
-    btnNovoCliente.addEventListener("click", () => {
-        prepararFormularioNovo();
-    });
+    campoBusca.addEventListener("input", () => aplicarFiltros());
+    filtroSituacao.addEventListener("change", () => aplicarFiltros());
+    btnNovoCliente.addEventListener("click", () => prepararFormularioNovo());
 }
 
-/**
- * Aplica máscara de CPF no campo enquanto o usuário digita.
- */
 function configurarMascaraCPF() {
     const campoCPF = document.getElementById("cpfCliente");
     if (!campoCPF) return;
@@ -60,9 +45,6 @@ function configurarMascaraCPF() {
     });
 }
 
-/**
- * Busca todos os clientes no json-server.
- */
 async function carregarClientes() {
     try {
         const resposta = await fetch(`${API_BASE}/clientes`);
@@ -81,9 +63,6 @@ async function carregarClientes() {
     }
 }
 
-/**
- * Mostra os clientes na tabela.
- */
 function renderizarClientes(lista) {
     const tbody = document.getElementById("tabelaClientes");
     if (!tbody) return;
@@ -105,25 +84,25 @@ function renderizarClientes(lista) {
         const situacao = ativo ? "Ativo" : "Inativo";
         const classeBadge = ativo ? "bg-success" : "bg-secondary";
         const botaoInativar = ativo
-            ? `<button class="btn btn-sm btn-outline-warning" onclick="inativarCliente(${cliente.id})" title="Inativar">
+            ? `<button class="btn btn-sm btn-outline-warning" onclick="inativarCliente('${cliente.id}')" title="Inativar">
                  <i class="fa-solid fa-user-slash"></i>
                </button>`
-            : `<button class="btn btn-sm btn-outline-success" onclick="reativarCliente(${cliente.id})" title="Reativar">
+            : `<button class="btn btn-sm btn-outline-success" onclick="reativarCliente('${cliente.id}')" title="Reativar">
                  <i class="fa-solid fa-user-check"></i>
                </button>`;
 
         return `
     <tr>
       <td>${cliente.nome || "-"}</td>
-      <td>${cliente.cpf || "-"}</td>
-      <td>${cliente.endereco || "-"}</td>
+      <td style="white-space: nowrap;">${cliente.cpf || "-"}</td>
+      <td class="tabela-clientes-endereco">${cliente.endereco || "-"}</td>
       <td>
         <span class="badge ${classeBadge}">
           ${situacao}
         </span>
       </td>
-      <td class="text-end">
-        <button class="btn btn-sm btn-outline-primary me-2" onclick="editarCliente(${cliente.id})" title="Editar">
+      <td class="text-end" style="white-space: nowrap;">
+        <button class="btn btn-sm btn-outline-primary me-1" onclick="editarCliente('${cliente.id}')" title="Editar">
           <i class="fa-solid fa-pen-to-square"></i>
         </button>
         ${botaoInativar}
@@ -133,24 +112,17 @@ function renderizarClientes(lista) {
     }).join("");
 }
 
-/**
- * Atualiza o número total de clientes exibido na tela.
- */
 function atualizarTotalClientes(total) {
     const totalClientesPagina = document.getElementById("totalClientesPagina");
     if (totalClientesPagina) totalClientesPagina.textContent = total;
 }
 
-/**
- * Aplica os dois filtros: busca por texto + situação (Ativo/Inativo).
- */
 function aplicarFiltros() {
     const termoBusca = document.getElementById("campoBuscaCliente")?.value || "";
     const situacao = document.getElementById("filtroSituacaoCliente")?.value || "";
 
     let resultado = [...clientes];
 
-    // Filtra por texto (nome, e-mail, CPF, endereço)
     const termo = String(termoBusca).toLowerCase().trim();
     if (termo !== "") {
         resultado = resultado.filter((cliente) => {
@@ -162,7 +134,6 @@ function aplicarFiltros() {
         });
     }
 
-    // Filtra por situação
     if (situacao === "ativo") {
         resultado = resultado.filter(c => c.ativo === true || c.ativo === undefined);
     } else if (situacao === "inativo") {
@@ -174,16 +145,10 @@ function aplicarFiltros() {
     atualizarTotalClientes(clientesFiltrados.length);
 }
 
-/**
- * Filtra clientes (mantida para compatibilidade).
- */
 function filtrarClientes(texto) {
     aplicarFiltros();
 }
 
-/**
- * Prepara o modal para um novo cliente.
- */
 function prepararFormularioNovo() {
     document.getElementById("tituloModalCliente").textContent = "Novo cliente";
     document.getElementById("clienteId").value = "";
@@ -193,9 +158,6 @@ function prepararFormularioNovo() {
     document.getElementById("enderecoCliente").value = "";
 }
 
-/**
- * Abre o formulário com os dados do cliente para edição.
- */
 async function editarCliente(id) {
     try {
         const resposta = await fetch(`${API_BASE}/clientes/${id}`);
@@ -228,7 +190,7 @@ function cpfDuplicado(cpf, idIgnorar) {
     const cpfLimpo = cpf.replace(/\D/g, "");
     return clientes.some(cliente => {
         const cpfCliente = (cliente.cpf || "").replace(/\D/g, "");
-        if (idIgnorar && Number(cliente.id) === Number(idIgnorar)) return false;
+        if (idIgnorar && String(cliente.id) === String(idIgnorar)) return false;
         return cpfCliente === cpfLimpo;
     });
 }
@@ -237,7 +199,7 @@ function emailDuplicado(email, idIgnorar) {
     const emailLimpo = email.toLowerCase().trim();
     return clientes.some(cliente => {
         const emailCliente = (cliente.email || "").toLowerCase().trim();
-        if (idIgnorar && Number(cliente.id) === Number(idIgnorar)) return false;
+        if (idIgnorar && String(cliente.id) === String(idIgnorar)) return false;
         return emailCliente === emailLimpo;
     });
 }

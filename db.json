@@ -154,6 +154,14 @@
       "endereco": "Rua Nova, 205 - Jundiaí - SP",
       "ativo": false,
       "dataCadastro": "2026-05-31"
+    },
+    {
+      "nome": "Isabelly Pagliarini",
+      "email": "isa@email.com",
+      "cpf": "334.445.556-78",
+      "endereco": "rua dela, 867",
+      "ativo": true,
+      "id": "2SiBsnGNU88"
     }
   ],
   "produtos": [
@@ -669,7 +677,7 @@
     {
       "id": "8",
       "clienteId": 6,
-      "status": "enviado",
+      "status": "entregue",
       "data": "2026-05-21",
       "valorTotal": 319.6,
       "observacao": "Retirar em loja"
