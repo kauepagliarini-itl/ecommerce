@@ -115,12 +115,12 @@
         </div>
       </section>
 
-      <!-- Busca -->
+      <!-- Busca e Filtro por Status -->
       <section class="card shadow-sm border-0 mb-4" data-aos="fade-up">
         <div class="card-body">
-          <div class="row g-3 align-items-center">
-            <div class="col-12 col-md-8">
-              <label for="campoBuscaPedido" class="form-label">Buscar pedido</label>
+          <div class="row g-3 align-items-end">
+            <div class="col-12 col-md-5">
+              <label for="campoBuscaPedido" class="form-label">Buscar por cliente</label>
               <input
                 type="text"
                 class="form-control"
@@ -128,9 +128,19 @@
                 placeholder="Digite o nome do cliente..."
               />
             </div>
-
+            <div class="col-12 col-md-3">
+              <label for="filtroStatusPedido" class="form-label">Filtrar por status</label>
+              <select class="form-select" id="filtroStatusPedido">
+                <option value="">Todos os status</option>
+                <option value="aguardando pagamento">Aguardando pagamento</option>
+                <option value="pago">Pago</option>
+                <option value="enviado">Enviado</option>
+                <option value="entregue">Entregue</option>
+                <option value="cancelado">Cancelado</option>
+              </select>
+            </div>
             <div class="col-12 col-md-4 text-md-end">
-              <p class="text-muted mb-0 mt-md-4">
+              <p class="text-muted mb-0">
                 Total exibido: <strong id="totalExibidoPedidos">0</strong>
               </p>
             </div>

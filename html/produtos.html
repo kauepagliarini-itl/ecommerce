@@ -20,7 +20,7 @@
   <!-- AOS.js -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.css" />
 
-  <!-- CSS do projeto (CORRIGIDO: precisa subir uma pasta, igual o JS faz) -->
+  <!-- CSS do projeto -->
   <link rel="stylesheet" href="../css/style.css" />
 </head>
 <body class="bg-light">
@@ -106,12 +106,12 @@
         </div>
       </section>
 
-      <!-- Busca -->
+      <!-- Busca e Filtro por Estoque -->
       <section class="card shadow-sm border-0 mb-4" data-aos="fade-up">
         <div class="card-body">
-          <div class="row g-3 align-items-center">
-            <div class="col-12 col-md-8">
-              <label for="campoBuscaProduto" class="form-label">Buscar produto</label>
+          <div class="row g-3 align-items-end">
+            <div class="col-12 col-md-5">
+              <label for="campoBuscaProduto" class="form-label">Buscar por nome</label>
               <input
                 type="text"
                 class="form-control"
@@ -119,9 +119,17 @@
                 placeholder="Digite o nome do produto..."
               />
             </div>
-
+            <div class="col-12 col-md-3">
+              <label for="filtroEstoqueProduto" class="form-label">Filtrar por estoque</label>
+              <select class="form-select" id="filtroEstoqueProduto">
+                <option value="">Todos</option>
+                <option value="normal">Normal (> 5)</option>
+                <option value="critico">Crítico (1 a 5)</option>
+                <option value="esgotado">Esgotado (0)</option>
+              </select>
+            </div>
             <div class="col-12 col-md-4 text-md-end">
-              <p class="text-muted mb-0 mt-md-4">
+              <p class="text-muted mb-0">
                 Total exibido: <strong id="totalExibidoProdutos">0</strong>
               </p>
             </div>

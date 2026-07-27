@@ -19,12 +19,17 @@ document.addEventListener("DOMContentLoaded", () => {
 function configurarEventos() {
   const formProduto = document.getElementById("formProduto");
   const campoBusca = document.getElementById("campoBuscaProduto");
+  const filtroEstoque = document.getElementById("filtroEstoqueProduto");
   const btnNovoProduto = document.getElementById("btnNovoProduto");
 
   formProduto.addEventListener("submit", salvarProduto);
 
-  campoBusca.addEventListener("input", (e) => {
-    filtrarProdutos(e.target.value);
+  campoBusca.addEventListener("input", () => {
+    aplicarFiltros();
+  });
+
+  filtroEstoque.addEventListener("change", () => {
+    aplicarFiltros();
   });
 
   btnNovoProduto.addEventListener("click", () => {
@@ -64,8 +69,6 @@ async function carregarProdutos() {
 
 /**
  * Mostra os produtos na tabela.
- * Colunas: Nome, Categoria, Tamanho, Preço, Estoque, Ações
- * Destaca em vermelho suave produtos com estoque = 0.
  */
 function renderizarProdutos(lista) {
   const tbody = document.getElementById("tabelaProdutos");
@@ -87,7 +90,6 @@ function renderizarProdutos(lista) {
   tbody.innerHTML = lista.map((produto) => {
     const estoque = Number(produto.estoque ?? 0);
 
-    // Badge de estoque: verde se > 0, vermelho "Esgotado" se = 0
     let badgeEstoque = "";
     if (estoque === 0) {
       badgeEstoque = `<span class="badge bg-danger">Esgotado</span>`;
@@ -97,7 +99,6 @@ function renderizarProdutos(lista) {
       badgeEstoque = `<span class="badge bg-success">${estoque}</span>`;
     }
 
-    // Estilo inline direto na linha para fundo vermelho bem clarinho
     const estiloLinha = estoque === 0 
       ? 'style="background-color: rgba(255, 130, 130, 0.10) !important;"' 
       : '';
@@ -150,28 +151,50 @@ function atualizarTotalExibido(total) {
 }
 
 /**
- * Filtra produtos por nome.
+ * Aplica os dois filtros ao mesmo tempo: busca por nome + filtro por estoque.
  */
-function filtrarProdutos(texto) {
-  const termo = String(texto).toLowerCase().trim();
+function aplicarFiltros() {
+  const termoBusca = document.getElementById("campoBuscaProduto")?.value || "";
+  const filtroEstoque = document.getElementById("filtroEstoqueProduto")?.value || "";
 
-  if (termo === "") {
-    produtosFiltrados = [...produtos];
-  } else {
-    produtosFiltrados = produtos.filter((produto) => {
+  let resultado = [...produtos];
+
+  // Filtra por nome
+  const termo = String(termoBusca).toLowerCase().trim();
+  if (termo !== "") {
+    resultado = resultado.filter((produto) => {
       const nome = String(produto.nome || "").toLowerCase();
       return nome.includes(termo);
     });
   }
 
+  // Filtra por estoque
+  if (filtroEstoque === "normal") {
+    resultado = resultado.filter(p => Number(p.estoque ?? 0) > 5);
+  } else if (filtroEstoque === "critico") {
+    resultado = resultado.filter(p => {
+      const estoque = Number(p.estoque ?? 0);
+      return estoque >= 1 && estoque <= 5;
+    });
+  } else if (filtroEstoque === "esgotado") {
+    resultado = resultado.filter(p => Number(p.estoque ?? 0) === 0);
+  }
+
+  produtosFiltrados = resultado;
   renderizarProdutos(produtosFiltrados);
   atualizarResumo(produtosFiltrados);
   atualizarTotalExibido(produtosFiltrados.length);
 }
 
 /**
+ * Filtra produtos por nome (mantida para compatibilidade).
+ */
+function filtrarProdutos(texto) {
+  aplicarFiltros();
+}
+
+/**
  * Prepara o modal para um novo produto.
- * Limpa todos os campos.
  */
 function prepararFormularioNovo() {
   document.getElementById("tituloModalProduto").textContent = "Novo produto";
@@ -229,73 +252,34 @@ async function salvarProduto(evento) {
   const preco = Number(document.getElementById("precoProduto").value);
   const estoque = Number(document.getElementById("estoqueProduto").value);
 
-  // Validações
   if (!nome) {
-    Swal.fire({
-      title: "Atenção!",
-      text: "O nome do produto é obrigatório.",
-      icon: "warning"
-    });
+    Swal.fire({ title: "Atenção!", text: "O nome do produto é obrigatório.", icon: "warning" });
     return;
   }
-
   if (!categoria) {
-    Swal.fire({
-      title: "Atenção!",
-      text: "Selecione uma categoria.",
-      icon: "warning"
-    });
+    Swal.fire({ title: "Atenção!", text: "Selecione uma categoria.", icon: "warning" });
     return;
   }
-
   if (!tamanho) {
-    Swal.fire({
-      title: "Atenção!",
-      text: "Selecione um tamanho.",
-      icon: "warning"
-    });
+    Swal.fire({ title: "Atenção!", text: "Selecione um tamanho.", icon: "warning" });
     return;
   }
-
   if (Number.isNaN(preco) || preco <= 0) {
-    Swal.fire({
-      title: "Atenção!",
-      text: "O preço deve ser um número maior que zero.",
-      icon: "warning"
-    });
+    Swal.fire({ title: "Atenção!", text: "O preço deve ser um número maior que zero.", icon: "warning" });
     return;
   }
-
   if (Number.isNaN(estoque) || estoque < 0 || !Number.isInteger(estoque)) {
-    Swal.fire({
-      title: "Atenção!",
-      text: "O estoque deve ser um número inteiro maior ou igual a zero.",
-      icon: "warning"
-    });
+    Swal.fire({ title: "Atenção!", text: "O estoque deve ser um número inteiro maior ou igual a zero.", icon: "warning" });
     return;
   }
 
-  // Monta o objeto produto
-  const produto = {
-    nome,
-    categoria,
-    tamanho,
-    preco,
-    estoque
-  };
+  const produto = { nome, categoria, tamanho, preco, estoque };
 
-  // Confirmação antes de salvar
   const confirmacao = await Swal.fire({
     title: id ? "Confirmar atualização?" : "Confirmar cadastro?",
-    text: id
-      ? "Deseja realmente atualizar este produto?"
-      : "Deseja cadastrar este novo produto?",
-    icon: "question",
-    showCancelButton: true,
-    confirmButtonColor: "#198754",
-    cancelButtonColor: "#6c757d",
-    confirmButtonText: "Sim, salvar",
-    cancelButtonText: "Cancelar"
+    text: id ? "Deseja realmente atualizar este produto?" : "Deseja cadastrar este novo produto?",
+    icon: "question", showCancelButton: true, confirmButtonColor: "#198754", cancelButtonColor: "#6c757d",
+    confirmButtonText: "Sim, salvar", cancelButtonText: "Cancelar"
   });
 
   if (!confirmacao.isConfirmed) return;
@@ -303,19 +287,11 @@ async function salvarProduto(evento) {
   try {
     if (id) {
       await fetch(`${API_BASE}/produtos/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(produto)
+        method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(produto)
       });
     } else {
       await fetch(`${API_BASE}/produtos`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(produto)
+        method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(produto)
       });
     }
 
@@ -325,25 +301,16 @@ async function salvarProduto(evento) {
     Swal.fire({
       title: id ? "Atualizado!" : "Cadastrado!",
       text: id ? "Produto atualizado com sucesso." : "Produto cadastrado com sucesso.",
-      icon: "success",
-      timer: 2000,
-      showConfirmButton: false
+      icon: "success", timer: 2000, showConfirmButton: false
     });
-
   } catch (erro) {
     console.error("Erro ao salvar produto:", erro);
-
-    Swal.fire({
-      title: "Erro!",
-      text: "Não foi possível salvar o produto.",
-      icon: "error"
-    });
+    Swal.fire({ title: "Erro!", text: "Não foi possível salvar o produto.", icon: "error" });
   }
 }
 
 /**
  * Verifica se o produto está vinculado a algum item de pedido.
- * Retorna true se estiver vinculado.
  */
 function produtoTemVinculo(produtoId) {
   return itensPedido.some(item => Number(item.produtoId) === Number(produtoId));
@@ -353,7 +320,6 @@ function produtoTemVinculo(produtoId) {
  * Exclui um produto, verificando antes se ele está vinculado a algum pedido.
  */
 async function excluirProduto(id) {
-  // Verifica se o produto está em algum item de pedido
   if (produtoTemVinculo(id)) {
     Swal.fire({
       title: "Exclusão bloqueada!",
@@ -363,42 +329,22 @@ async function excluirProduto(id) {
     return;
   }
 
-  // Confirmação antes de excluir
   const resultado = await Swal.fire({
     title: "Tem certeza?",
     text: "Este produto será excluído permanentemente!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#dc3545",
-    cancelButtonColor: "#6c757d",
-    confirmButtonText: "Sim, excluir",
-    cancelButtonText: "Cancelar"
+    icon: "warning", showCancelButton: true, confirmButtonColor: "#dc3545", cancelButtonColor: "#6c757d",
+    confirmButtonText: "Sim, excluir", cancelButtonText: "Cancelar"
   });
 
   if (!resultado.isConfirmed) return;
 
   try {
-    await fetch(`${API_BASE}/produtos/${id}`, {
-      method: "DELETE"
-    });
-
+    await fetch(`${API_BASE}/produtos/${id}`, { method: "DELETE" });
     await carregarProdutos();
-
-    Swal.fire({
-      title: "Excluído!",
-      text: "Produto removido com sucesso.",
-      icon: "success",
-      timer: 2000,
-      showConfirmButton: false
-    });
+    Swal.fire({ title: "Excluído!", text: "Produto removido com sucesso.", icon: "success", timer: 2000, showConfirmButton: false });
   } catch (erro) {
     console.error("Erro ao excluir produto:", erro);
-
-    Swal.fire({
-      title: "Erro!",
-      text: "Não foi possível excluir o produto.",
-      icon: "error"
-    });
+    Swal.fire({ title: "Erro!", text: "Não foi possível excluir o produto.", icon: "error" });
   }
 }
 
@@ -406,8 +352,5 @@ async function excluirProduto(id) {
  * Formata valores em moeda brasileira.
  */
 function formatarMoeda(valor) {
-  return new Intl.NumberFormat("pt-BR", {
-    style: "currency",
-    currency: "BRL"
-  }).format(Number(valor) || 0);
+  return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(Number(valor) || 0);
 }

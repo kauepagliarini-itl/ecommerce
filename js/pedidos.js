@@ -26,15 +26,21 @@ document.addEventListener("DOMContentLoaded", () => {
 function configurarEventos() {
   const formPedido = document.getElementById("formPedido");
   const campoBusca = document.getElementById("campoBuscaPedido");
+  const filtroStatus = document.getElementById("filtroStatusPedido");
   const btnNovoPedido = document.getElementById("btnNovoPedido");
   const btnAdicionarItem = document.getElementById("btnAdicionarItem");
   const produtoSelect = document.getElementById("produtoPedido");
 
   formPedido.addEventListener("submit", salvarPedido);
 
-  campoBusca.addEventListener("input", (e) => {
+  campoBusca.addEventListener("input", () => {
     paginaAtual = 1;
-    filtrarPedidos(e.target.value);
+    aplicarFiltros();
+  });
+
+  filtroStatus.addEventListener("change", () => {
+    paginaAtual = 1;
+    aplicarFiltros();
   });
 
   btnNovoPedido.addEventListener("click", () => {
@@ -247,13 +253,39 @@ function atualizarTotalExibido(total) {
   if (el) el.textContent = total;
 }
 
-function filtrarPedidos(texto) {
-  const termo = String(texto).toLowerCase().trim();
-  listaFiltrada = termo === "" ? [...pedidos] : pedidos.filter(p => obterNomeCliente(p.clienteId).toLowerCase().includes(termo));
-  paginaAtual = 1;
+/**
+ * Aplica os dois filtros ao mesmo tempo: busca por nome + filtro por status.
+ */
+function aplicarFiltros() {
+  const termoBusca = document.getElementById("campoBuscaPedido")?.value || "";
+  const statusSelecionado = document.getElementById("filtroStatusPedido")?.value || "";
+
+  let resultado = [...pedidos];
+
+  // Filtra por nome do cliente
+  const termo = String(termoBusca).toLowerCase().trim();
+  if (termo !== "") {
+    resultado = resultado.filter(p =>
+      obterNomeCliente(p.clienteId).toLowerCase().includes(termo)
+    );
+  }
+
+  // Filtra por status
+  if (statusSelecionado !== "") {
+    resultado = resultado.filter(p =>
+      normalizarTexto(p.status).includes(normalizarTexto(statusSelecionado))
+    );
+  }
+
+  listaFiltrada = resultado;
   renderizarPedidos();
   atualizarResumo(listaFiltrada);
   atualizarTotalExibido(listaFiltrada.length);
+}
+
+function filtrarPedidos(texto) {
+  // Mantida por compatibilidade, mas agora usa aplicarFiltros()
+  aplicarFiltros();
 }
 
 /* ================================================================
